@@ -29,21 +29,21 @@ public class SpringBootPlusGenerator {
         // 公共配置
         // 数据库配置
         codeGenerator
-                .setUserName("root")
-                .setPassword("root")
+                .setUserName("xp_seagull")
+                .setPassword("eWJw5zUkXa3Gz1lR")
                 .setDriverName("com.mysql.jdbc.Driver")
-                .setDriverUrl("jdbc:mysql://localhost:3306/spring_boot_plus?useUnicode=true&characterEncoding=UTF-8&useSSL=false");
+                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
 
         // 包信息
         codeGenerator
-                .setProjectPackagePath("io/geekidea/springbootplus")
-                .setParentPackage("io.geekidea.springbootplus");
+                .setProjectPackagePath("com/xiaopeng/xpseagull")
+                .setParentPackage("com.xiaopeng.xpseagull");
 
         // 组件作者等配置
         codeGenerator
-                .setModuleName("foobar")
-                .setAuthor("geekidea")
-                .setPkIdColumnName("id");
+                .setModuleName("data")
+                .setAuthor("fangx")
+                .setPkIdColumnName("pk");
 
         // 生成策略
         codeGenerator
@@ -78,7 +78,12 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                "foo_bar"
+                "banner",
+                "entry",
+                "leave_info",
+                "order_log",
+                "pay_order",
+                "sign_secret"
         };
 
         // 循环生成
