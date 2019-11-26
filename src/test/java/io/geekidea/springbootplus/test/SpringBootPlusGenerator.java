@@ -64,7 +64,7 @@ public class SpringBootPlusGenerator {
                 .setGeneratorService(true)
                 .setGeneratorServiceImpl(true)
                 .setGeneratorMapper(true)
-                .setGeneratorMapperXml(true);
+                .setGeneratorMapperXml(false);
 
         // 是否生成Shiro RequiresPermissions注解
         codeGenerator.setRequiresPermissions(false);

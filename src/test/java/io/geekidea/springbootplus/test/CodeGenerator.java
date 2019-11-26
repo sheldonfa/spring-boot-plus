@@ -246,7 +246,7 @@ public class CodeGenerator {
         gc.setOutputDir(projectPath + "/src/main/java");
         gc.setAuthor(author);
         gc.setOpen(false);                  // 是否打开输出目录
-        gc.setSwagger2(true);               // 启用swagger注解
+        gc.setSwagger2(false);               // 启用swagger注解
         gc.setIdType(IdType.ID_WORKER);     // 主键类型:ID_WORKER
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
