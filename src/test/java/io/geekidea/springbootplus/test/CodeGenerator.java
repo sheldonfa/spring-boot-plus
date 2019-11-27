@@ -262,7 +262,7 @@ public class CodeGenerator {
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
-        gc.setActiveRecord(true);           // ActiveRecord 模式 CRUD
+        gc.setActiveRecord(false);           // ActiveRecord 模式 CRUD
 
         mpg.setGlobalConfig(gc);
 

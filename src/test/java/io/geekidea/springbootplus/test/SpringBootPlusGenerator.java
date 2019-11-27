@@ -43,7 +43,7 @@ public class SpringBootPlusGenerator {
         codeGenerator
                 .setModuleName("your_module")
                 .setAuthor("fangx")
-                .setPkIdColumnName("pk");
+                .setPkIdColumnName("id");
 
         // 生成策略
         codeGenerator
@@ -64,7 +64,7 @@ public class SpringBootPlusGenerator {
                 .setGeneratorService(true)
                 .setGeneratorServiceImpl(true)
                 .setGeneratorMapper(true)
-                .setGeneratorMapperXml(false);
+                .setGeneratorMapperXml(true);
 
         // 是否生成Shiro RequiresPermissions注解
         codeGenerator.setRequiresPermissions(false);
