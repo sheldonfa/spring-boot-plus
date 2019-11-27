@@ -83,7 +83,8 @@ public class SpringBootPlusGenerator {
                 "leave_info",
                 "order_log",
                 "pay_order",
-                "sign_secret"
+                "sign_secret",
+                "article"
         };
 
         // 循环生成

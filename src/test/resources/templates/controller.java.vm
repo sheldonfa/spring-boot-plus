@@ -79,7 +79,7 @@ public class ${table.controllerName} {
     /**
      * 修改$!{table.comment}
      */
-    @PostMapping("/update")
+    @PutMapping("/update")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
@@ -98,7 +98,7 @@ public class ${table.controllerName} {
     /**
      * 删除$!{table.comment}
      */
-    @PostMapping("/delete/{id}")
+    @DeleteMapping("/delete/{id}")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end
