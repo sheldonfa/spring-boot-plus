@@ -16,11 +16,13 @@
 
 package io.geekidea.springbootplus.test;
 
+import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
+import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.baomidou.mybatisplus.generator.config.rules.DateType;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
@@ -213,12 +215,18 @@ public class CodeGenerator {
     private boolean fileOverride;
 
     /**
+     * 逻辑删除
+     */
+    private String logicDeleteFieldName;
+
+    /**
      * 初始化变量
      */
     public void init() {
         this.commonParentPackage = this.parentPackage + ".common";
         // 父类包路径
-        this.superEntity = this.commonParentPackage + ".entity.BaseEntity";
+//        this.superEntity = this.commonParentPackage + ".entity.BaseEntity";
+        this.superEntity = "com.baomidou.mybatisplus.extension.activerecord.Model";
         this.superController = this.commonParentPackage + ".controller.BaseController";
         this.superService = this.commonParentPackage + ".service.BaseService";
         this.superServiceImpl = this.commonParentPackage + ".service.impl.BaseServiceImpl";
@@ -231,6 +239,9 @@ public class CodeGenerator {
         this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum";
         this.commonOrderQueryParam = this.commonParentPackage + ".param.OrderQueryParam";
         this.commonPaging = this.commonParentPackage + ".vo.Paging";
+
+        // mybatis配置
+        this.logicDeleteFieldName = "is_delete";
     }
 
     /**
@@ -407,6 +418,11 @@ public class CodeGenerator {
         strategy.setInclude(tableName);
         strategy.setSuperEntityColumns(superEntityCommonColumns);
         strategy.setControllerMappingHyphenStyle(true);
+        strategy.setLogicDeleteFieldName(logicDeleteFieldName);
+        List<TableFill> tableFillList = new ArrayList<>();
+        tableFillList.add(new TableFill("create_time", FieldFill.INSERT));
+        tableFillList.add(new TableFill("update_time", FieldFill.INSERT_UPDATE));
+        strategy.setTableFillList(tableFillList);
         /**
          * 注意，根据实际情况，进行设置
          * 当表名称的前缀和模块名称一样时，会去掉表的前缀

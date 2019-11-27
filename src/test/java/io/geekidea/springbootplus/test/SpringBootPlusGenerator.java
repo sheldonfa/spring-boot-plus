@@ -36,12 +36,12 @@ public class SpringBootPlusGenerator {
 
         // 包信息
         codeGenerator
-                .setProjectPackagePath("com/xiaopeng/xpseagull")
-                .setParentPackage("com.xiaopeng.xpseagull");
+                .setProjectPackagePath("io/geekidea/springbootplus")
+                .setParentPackage("io.geekidea.springbootplus");
 
         // 组件作者等配置
         codeGenerator
-                .setModuleName("data")
+                .setModuleName("your_module")
                 .setAuthor("fangx")
                 .setPkIdColumnName("pk");
 

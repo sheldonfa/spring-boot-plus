@@ -105,9 +105,9 @@ public class ${entity} implements Serializable {
 #if(${cfg.paramValidation})
 #if(${field.customMap.null} == 'NO' && !${field.customMap.default})
 #if(${field.propertyType} == 'String')
-@NotBlank(message = "${field.comment}不能为空")
+    @NotBlank(message = "${field.comment}不能为空")
 #else
-@NotNull(message = "${field.comment}不能为空")
+    @NotNull(message = "${field.comment}不能为空")
 #end
     private ${field.propertyType} ${field.propertyName};
 #else
