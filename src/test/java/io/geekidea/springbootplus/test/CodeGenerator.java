@@ -351,6 +351,8 @@ public class CodeGenerator {
                 map.put("colonTableName", colonTableName);
                 // 是否生成Shiro RequiresPermissions注解
                 map.put("requiresPermissions", requiresPermissions);
+                // request mapping 前缀
+                map.put("requestMapPrefix", StringPool.SLASH + "v1" + StringPool.SLASH + "internal" + StringPool.SLASH);
                 this.setMap(map);
             }
         };
@@ -403,6 +405,15 @@ public class CodeGenerator {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
                     return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convert/" + tableInfo.getEntityName() + "Convert" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+        // 自定义feignClient模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/feignClient.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/feign/" + tableInfo.getEntityName() + "ControllerClient" + StringPool.DOT_JAVA;
                 }
             });
         }

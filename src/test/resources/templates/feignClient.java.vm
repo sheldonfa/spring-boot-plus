@@ -1,0 +1,96 @@
+package ${package.Controller};
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import ${cfg.queryParamPath};
+import ${cfg.queryVoPath};
+import ${cfg.dtoPath};
+import ${cfg.dtoPath};
+import ${cfg.convertPath};
+import ${cfg.apiResult};
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+#if(${swagger2})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+#end
+import lombok.extern.slf4j.Slf4j;
+import io.geekidea.springbootplus.common.constraints.MessageCode;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.geekidea.springbootplus.util.CommonUtils;
+import io.geekidea.springbootplus.util.ExceptionUtil;
+#if(${cfg.paramValidation})
+import javax.validation.Valid;
+#end
+import ${cfg.paging};
+import ${cfg.idParamPath};
+
+/**
+ * <pre>
+ * $!{table.comment} 前端控制器
+ * </pre>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+
+#else
+public interface  ${table.controllerName}Client {
+
+#if(${cfg.generatorStrategy} != 'SIMPLE')
+    /**
+     * 添加$!{table.comment}
+     */
+    @PostMapping("/add")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:add")
+#end
+    ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto);
+
+    /**
+     * 修改$!{table.comment}
+     */
+    @PostMapping("/update")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:update")
+#end
+    ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto);
+
+    /**
+     * 删除$!{table.comment}
+     */
+    @DeleteMapping("/delete/{id}")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:delete")
+#end
+    ResponseWrapper<Boolean> delete${entity}(@PathVariable("id") Long id);
+
+    /**
+     * 获取$!{table.comment}
+     */
+    @GetMapping("/info/{id}")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:info")
+#end
+    ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("id") Long id);
+
+    /**
+     * $!{table.comment}分页列表
+     */
+    @PostMapping("/pageList")
+#if(${cfg.requiresPermissions})
+    @RequiresPermissions("$!{cfg.colonTableName}:page")
+#end
+    ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+#end
+
+}
+
+#end

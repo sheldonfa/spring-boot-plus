@@ -44,7 +44,7 @@ import ${cfg.idParamPath};
 #else
 @Controller
 #end
-@RequestMapping("/${cfg.entityObjectName}")
+@RequestMapping("${cfg.requestMapPrefix}${cfg.entityObjectName}")
 #if(${swagger2})
 @Api("$!{table.comment} API")
 #end
@@ -85,7 +85,7 @@ public class ${table.controllerName} {
     /**
      * 修改$!{table.comment}
      */
-    @PutMapping("/update")
+    @PostMapping("/update")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
