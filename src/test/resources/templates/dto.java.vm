@@ -52,10 +52,13 @@ public class ${entity}Dto implements Serializable {
 #if(${versionFieldName}==${field.name})
     @Version
 #end
+## 主键是生成的，不需要传
+#if(!${field.keyFlag})
 #if(${field.propertyType} == 'String')
 @NotBlank(message = "${field.comment}不能为空")
 #else
 @NotNull(message = "${field.comment}不能为空")
+#end
 #end
     private ${field.propertyType} ${field.propertyName};
 #end

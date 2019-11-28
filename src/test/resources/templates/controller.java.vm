@@ -22,12 +22,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
-
-
+import io.geekidea.springbootplus.util.CommonUtils;
+import io.geekidea.springbootplus.util.ExceptionUtil;
 #if(${cfg.paramValidation})
 import javax.validation.Valid;
 #end
-
 import ${cfg.paging};
 import ${cfg.idParamPath};
 
@@ -94,6 +93,9 @@ public class ${table.controllerName} {
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
 #end
     public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
+        if(CommonUtils.empty(${cfg.entityObjectName}Dto.get${cfg.pkIdCamelNameCapitalFirst}())){
+            throw ExceptionUtil.paramRequired("${cfg.pkIdCamelName}");
+        }
         ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});

@@ -331,6 +331,8 @@ public class CodeGenerator {
                 map.put("pkIdColumnName", pkIdColumnName);
                 // 主键ID驼峰名称
                 map.put("pkIdCamelName", underlineToCamel(pkIdColumnName));
+                // 主键ID驼峰名称首字母大写
+                map.put("pkIdCamelNameCapitalFirst", NamingStrategy.capitalFirst(underlineToCamel(pkIdColumnName)));
                 // 导入分页类
                 map.put("paging", commonPaging);
                 // 导入排序枚举
