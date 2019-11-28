@@ -376,6 +376,25 @@ public class CodeGenerator {
             });
         }
 
+        // 自定义dto模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/dto.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/dto/" + tableInfo.getEntityName() + "Dto" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+        // 自定义convert模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/convert.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convert/" + tableInfo.getEntityName() + "Convert" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);
 

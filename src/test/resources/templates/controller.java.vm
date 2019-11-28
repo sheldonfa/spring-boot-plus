@@ -65,15 +65,15 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:add")
 #end
 #if(${swagger2})
-    @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ApiResult.class)
+    @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ApiResult<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
+    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
 #else
         boolean flag = ${cfg.serviceObjectName}.save(${cfg.entityObjectName});
 #end
-        return ApiResult.result(flag);
+        return ResponseWrapper.success(flag);
     }
 
     /**
@@ -84,15 +84,15 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
 #if(${swagger2})
-    @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ApiResult.class)
+    @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ApiResult<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity} ${cfg.entityObjectName}) throws Exception {
+    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
 #else
         boolean flag = ${cfg.serviceObjectName}.updateById(${cfg.entityObjectName});
 #end
-        return ApiResult.result(flag);
+        return ResponseWrapper.success(flag);
     }
 
     /**
@@ -103,15 +103,15 @@ public class ${table.controllerName} {
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end
 #if(${swagger2})
-    @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ApiResult.class)
+    @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ApiResult<Boolean> delete${entity}(@PathVariable("id") Long id) throws Exception {
+    public ResponseWrapper<Boolean> delete${entity}(@PathVariable("id") Long id) throws Exception {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.delete${entity}(id);
 #else
         boolean flag = ${cfg.serviceObjectName}.removeById(id);
 #end
-        return ApiResult.result(flag);
+        return ResponseWrapper.success(flag);
     }
 
     /**
@@ -124,9 +124,9 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
 #end
-    public ApiResult<${entity}QueryVo> get${entity}(@PathVariable("id") Long id) throws Exception {
-        ${entity}QueryVo ${cfg.entityObjectName}QueryVo = ${cfg.serviceObjectName}.get${entity}ById(id);
-        return ApiResult.ok(${cfg.entityObjectName}QueryVo);
+    public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("id") Long id) throws Exception {
+        ${entity}Dto ${cfg.entityObjectName}Dto = ${cfg.serviceObjectName}.get${entity}ById(id);
+        return ResponseWrapper.success(${cfg.entityObjectName}QueryVo);
     }
 
     /**
@@ -139,9 +139,13 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
 #end
-    public ApiResult<Paging<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        Paging<${entity}QueryVo> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
-        return ApiResult.ok(paging);
+    public ResponseWrapper<Paging<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        Paging<${entity}> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
+        // new page
+        IPage<${entity}Dto> newPaging = new Page<>();
+        newPaging.setTotal(paging.getTotal());
+        newPaging.setRecords(${entity}Convert.to${entity}DtoList}(paging.getRecords()));
+        return ResponseWrapper.success(newPaging);
     }
 #end
 

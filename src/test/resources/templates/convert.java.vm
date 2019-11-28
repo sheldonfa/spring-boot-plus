@@ -1,0 +1,48 @@
+package ${cfg.queryVoPackage};
+
+#if(${swagger2})
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
+#if(${entityLombokModel})
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import lombok.Data;
+import lombok.experimental.Accessors;
+#end
+import java.io.Serializable;
+
+import java.util.Date;
+
+/**
+ * <pre>
+ * $!{table.comment} 对象转换工具
+ * </pre>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+
+public class ${entity}Convert {
+
+    public static ${entity}Dto to${entity}Dto(${entity} entity) {
+        ${entity}Dto dto = new ${entity}Dto();
+        #foreach($field in ${table.fields})
+        ## ----------  BEGIN 字段循环遍历  ----------
+        dto.set${field.capitalName}(entity.get${field.capitalName}());
+        ## ----------  END 字段循环遍历  ----------
+        #end
+        return dto;
+    }
+
+    public static ${entity} to${entity}(${entity}Dto dto) {
+            ${entity} entity = new ${entity}();
+        #foreach($field in ${table.fields})
+        ## ----------  BEGIN 字段循环遍历  ----------
+            entity.set${field.capitalName}(dto.get${field.capitalName}());
+        ## ----------  END 字段循环遍历  ----------
+        #end
+        return entity;
+    }
+}
