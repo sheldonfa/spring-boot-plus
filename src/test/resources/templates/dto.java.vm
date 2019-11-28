@@ -5,6 +5,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableLogic;
@@ -12,7 +14,6 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 #end
 import java.io.Serializable;
-
 import java.util.Date;
 
 /**
@@ -51,7 +52,12 @@ public class ${entity}Dto implements Serializable {
 #if(${versionFieldName}==${field.name})
     @Version
 #end
-private ${field.propertyType} ${field.propertyName};
+#if(${field.propertyType} == 'String')
+@NotBlank(message = "${field.comment}不能为空")
+#else
+@NotNull(message = "${field.comment}不能为空")
+#end
+    private ${field.propertyType} ${field.propertyName};
 #end
 ## ----------  END 字段循环遍历  ----------
 #if(!${entityLombokModel})

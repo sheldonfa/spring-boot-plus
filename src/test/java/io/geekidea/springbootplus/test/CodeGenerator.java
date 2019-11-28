@@ -101,7 +101,7 @@ public class CodeGenerator {
      * 1. NORMAL 生成普通代码
      * 2. ALL 生成所有的代码
      */
-    private GeneratorStrategy generatorStrategy = GeneratorStrategy.ALL;
+    private GeneratorStrategy generatorStrategy = GeneratorStrategy.NORMAL;
 
     /**
      * 生成策略

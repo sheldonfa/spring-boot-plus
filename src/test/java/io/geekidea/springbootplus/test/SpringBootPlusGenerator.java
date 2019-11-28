@@ -47,7 +47,7 @@ public class SpringBootPlusGenerator {
 
         // 生成策略
         codeGenerator
-                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.ALL)
+                .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.NORMAL)
                 .setPageListOrder(true)
                 .setParamValidation(true);
 
