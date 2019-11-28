@@ -11,7 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
-
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -61,15 +62,14 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 #end
 
     @Override
-    public ${entity}QueryVo get${entity}ById(Serializable id) throws Exception {
-        return ${cfg.mapperObjectName}.get${entity}ById(id);
+    public ${entity} get${entity}ById(Serializable id) throws Exception {
+        return getById(id);
     }
 
     @Override
-    public Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        Page page = setPageParam(${cfg.entityObjectName}QueryParam, OrderItem.desc("create_time"));
-        IPage<${entity}QueryVo> iPage = ${cfg.mapperObjectName}.get${entity}PageList(page, ${cfg.entityObjectName}QueryParam);
-        return new Paging(iPage);
+    public IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        Page<${entity}> page = setPageParam(${cfg.entityObjectName}QueryParam, OrderItem.desc("create_time"));
+        return page(page, Wrappers.<${entity}>lambdaQuery().orderByDesc(${entity}::getCreateTime));
     }
 #end
 

@@ -1,5 +1,6 @@
 package ${package.Service};
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import ${package.Entity}.${entity};
 import ${superServiceClassPackage};
 import ${cfg.queryParamPath};
@@ -58,7 +59,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    ${entity}QueryVo get${entity}ById(Serializable id) throws Exception;
+    ${entity} get${entity}ById(Serializable id) throws Exception;
 
     /**
      * 获取分页对象
@@ -67,7 +68,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    Paging<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+        IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
 #end
 
 }
