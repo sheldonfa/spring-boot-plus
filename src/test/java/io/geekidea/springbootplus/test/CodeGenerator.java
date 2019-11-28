@@ -235,7 +235,7 @@ public class CodeGenerator {
 
         // 公共类包路径
         this.commonIdParam = this.commonParentPackage + ".param.IdParam";
-        this.commonApiResult = this.commonParentPackage + ".api.ApiResult";
+        this.commonApiResult = this.commonParentPackage + ".api.ResponseWrapper";
         this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum";
         this.commonOrderQueryParam = this.commonParentPackage + ".param.OrderQueryParam";
         this.commonPaging = this.commonParentPackage + ".vo.Paging";
@@ -311,6 +311,16 @@ public class CodeGenerator {
                 map.put("queryVoPackage", queryVoPackage);
                 // 响应结果类路径
                 map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
+                // Dto包路径
+                String dtoPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".dto";
+                map.put("dtoPackage", dtoPackage);
+                // Dto类路径
+                map.put("dtoPath", dtoPackage + StringPool.DOT + pascalTableName + "Dto");
+                // Convert包路径
+                String convertPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".convert";
+                map.put("convertPackage", convertPackage);
+                // Dto类路径
+                map.put("convertPath", convertPackage + StringPool.DOT + pascalTableName + "Convert");
                 // 实体对象名称
                 map.put("entityObjectName", camelTableName);
                 // service对象名称

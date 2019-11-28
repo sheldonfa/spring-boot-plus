@@ -1,4 +1,4 @@
-package ${cfg.queryVoPackage};
+package ${cfg.dtoPackage};
 
 #if(${swagger2})
 import io.swagger.annotations.ApiModel;

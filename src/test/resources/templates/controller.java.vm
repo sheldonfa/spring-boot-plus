@@ -4,6 +4,9 @@ import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
 import ${cfg.queryParamPath};
 import ${cfg.queryVoPath};
+import ${cfg.dtoPath};
+import ${cfg.dtoPath};
+import ${cfg.convertPath};
 import ${cfg.apiResult};
 #if(${superControllerClassPackage})
 import ${superControllerClassPackage};
@@ -13,9 +16,12 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 #end
 import lombok.extern.slf4j.Slf4j;
+import io.geekidea.springbootplus.common.constraints.MessageCode;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
 
 
 #if(${cfg.paramValidation})
@@ -68,12 +74,13 @@ public class ${table.controllerName} {
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
 #end
     public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
+        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
 #else
         boolean flag = ${cfg.serviceObjectName}.save(${cfg.entityObjectName});
 #end
-        return ResponseWrapper.success(flag);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
 
     /**
@@ -87,12 +94,13 @@ public class ${table.controllerName} {
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
 #end
     public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
+        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
 #else
         boolean flag = ${cfg.serviceObjectName}.updateById(${cfg.entityObjectName});
 #end
-        return ResponseWrapper.success(flag);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
 
     /**
@@ -111,7 +119,7 @@ public class ${table.controllerName} {
 #else
         boolean flag = ${cfg.serviceObjectName}.removeById(id);
 #end
-        return ResponseWrapper.success(flag);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
 
     /**
@@ -125,8 +133,9 @@ public class ${table.controllerName} {
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
 #end
     public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("id") Long id) throws Exception {
-        ${entity}Dto ${cfg.entityObjectName}Dto = ${cfg.serviceObjectName}.get${entity}ById(id);
-        return ResponseWrapper.success(${cfg.entityObjectName}QueryVo);
+        ${entity} ${cfg.entityObjectName} = ${cfg.serviceObjectName}.get${entity}ById(id);
+        ${entity}Dto ${cfg.entityObjectName}Dto =  ${entity}Convert.to${entity}Dto(${cfg.entityObjectName});
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(),${cfg.entityObjectName}Dto);
     }
 
     /**
@@ -139,13 +148,13 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
 #end
-    public ResponseWrapper<Paging<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        Paging<${entity}> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
+    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+        IPage<${entity}> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         // new page
-        IPage<${entity}Dto> newPaging = new Page<>();
-        newPaging.setTotal(paging.getTotal());
-        newPaging.setRecords(${entity}Convert.to${entity}DtoList}(paging.getRecords()));
-        return ResponseWrapper.success(newPaging);
+        Page<${entity}Dto> page = new Page<>();
+        page.setTotal(paging.getTotal());
+        page.setRecords(${entity}Convert.to${entity}DtoList(paging.getRecords()));
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(),page);
     }
 #end
 
