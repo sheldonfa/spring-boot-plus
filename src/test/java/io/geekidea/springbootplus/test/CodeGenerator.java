@@ -319,8 +319,18 @@ public class CodeGenerator {
                 // Convert包路径
                 String convertPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".convert";
                 map.put("convertPackage", convertPackage);
-                // Dto类路径
+                // Convert类路径
                 map.put("convertPath", convertPackage + StringPool.DOT + pascalTableName + "Convert");
+                // AdminController包路径
+                String adminControllerPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".admin";
+                map.put("adminControllerPackage", adminControllerPackage);
+                // AdminController类路径
+                map.put("adminControllerPath", adminControllerPackage + StringPool.DOT + "Admin" + pascalTableName + "Controller");
+                // feignClient包路径
+                String feignClientPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".feign";
+                map.put("feignClientPackage", feignClientPackage);
+                // feignClient类路径
+                map.put("feignClientPath", feignClientPackage + StringPool.DOT + pascalTableName + "ControllerClient");
                 // 实体对象名称
                 map.put("entityObjectName", camelTableName);
                 // service对象名称
@@ -414,6 +424,15 @@ public class CodeGenerator {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
                     return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/feign/" + tableInfo.getEntityName() + "ControllerClient" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+        // 自定义adminController模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/adminController.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/admin/" + "Admin" + tableInfo.getEntityName() + "Controller" + StringPool.DOT_JAVA;
                 }
             });
         }

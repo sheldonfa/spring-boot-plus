@@ -1,4 +1,4 @@
-package ${package.Controller};
+package ${cfg.feignClientPath};
 
 import ${package.Entity}.${entity};
 import ${package.Service}.${table.serviceName};
@@ -79,7 +79,7 @@ public interface  ${table.controllerName}Client {
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:info")
 #end
-    ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("id") Long id);
+    ResponseWrapper<${entity}Dto> get${entity}ById(@PathVariable("id") Long id)ById;
 
     /**
      * $!{table.comment}分页列表
