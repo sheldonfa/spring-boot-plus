@@ -14,6 +14,8 @@ import java.io.Serializable;
 import io.geekidea.springbootplus.util.CommonUtils;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
+
 import com.google.common.collect.Lists;
 
 /**
@@ -29,6 +31,9 @@ public class ${entity}Convert {
 
     public static ${entity}Dto to${entity}Dto(${entity} entity) {
         ${entity}Dto dto = new ${entity}Dto();
+        if(Objects.isNull(entity)){
+            return null;
+        }
 #foreach($field in ${table.fields})
         ## ----------  BEGIN 字段循环遍历  ----------
         dto.set${field.capitalName}(entity.get${field.capitalName}());
@@ -37,12 +42,21 @@ public class ${entity}Convert {
         return dto;
     }
 
-    public static ${entity} to${entity}(${entity}Dto dto) {
+    public static ${entity} to${entity}(${entity}Dto dto,Boolean remainId) {
             ${entity} entity = new ${entity}();
+    if(Objects.isNull(dto)){
+        return null;
+    }
 #foreach($field in ${table.fields})
         ## ----------  BEGIN 字段循环遍历  ----------
+        #if(${field.keyFlag})
+            if (remainId) {
+                entity.set${field.capitalName}(dto.get${field.capitalName}());
+            }
+        #else
             entity.set${field.capitalName}(dto.get${field.capitalName}());
-        ## ----------  END 字段循环遍历  ----------
+        #end
+    ## ----------  END 字段循环遍历  ----------
 #end
         return entity;
     }

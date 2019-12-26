@@ -436,6 +436,16 @@ public class CodeGenerator {
                 }
             });
         }
+        // 自定义ControllerTest模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/controllerTest.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/test/"  + tableInfo.getEntityName() + "ControllerTest" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
 
         cfg.setFileOutConfigList(focList);
         mpg.setCfg(cfg);

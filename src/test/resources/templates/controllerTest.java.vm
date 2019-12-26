@@ -1,0 +1,130 @@
+package ${package.Controller};
+
+import ${package.Entity}.${entity};
+import ${package.Service}.${table.serviceName};
+import ${cfg.queryParamPath};
+import ${cfg.queryVoPath};
+import ${cfg.dtoPath};
+import ${cfg.dtoPath};
+import ${cfg.convertPath};
+import ${cfg.apiResult};
+#if(${superControllerClassPackage})
+import ${superControllerClassPackage};
+#end
+#if(${swagger2})
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+#end
+import lombok.extern.slf4j.Slf4j;
+import io.geekidea.springbootplus.common.constraints.MessageCode;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.*;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import io.geekidea.springbootplus.util.CommonUtils;
+import io.geekidea.springbootplus.util.ExceptionUtil;
+#if(${cfg.paramValidation})
+import javax.validation.Valid;
+#end
+import ${cfg.paging};
+import ${cfg.idParamPath};
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
+
+/**
+ * <pre>
+ * $!{table.comment} 前端控制器
+ * </pre>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+@SpringBootTest
+@ActiveProfiles("ut")
+public class ${table.controllerName}Test extends BaseTest {
+
+    @Test
+    @Rollback
+    public void addArticle() throws Exception {
+        // 参数
+        //TODO
+        ArticleDto articleDto = new ArticleDto();
+        articleDto.setTitle("test title");
+        // test
+        String reqUrl = "/v1/internal/${cfg.entityObjectName}/add";
+        String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.post(reqUrl, 1L)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(JSON.toJSONString(articleDto))
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        Boolean response = TestUtil.parseObj(contentAsString, Boolean.class);
+        // assert
+        assertThat(response, is(true));
+        Page<ArticleDto> response2 = pageArticle();
+        assertThat(response2.getRecords().size(), is(2));
+    }
+
+    @Test
+    public void updateArticle() throws Exception {
+        // 参数
+        String id = "1204587066231980034";
+        ArticleDto articleDto = new ArticleDto();
+        articleDto.setId(id);
+        articleDto.setTitle("test_Update");
+        articleDto.setContent("test_Update");
+        articleDto.setCode("test_Update");
+        articleDto.setPosition("test_Update");
+        articleDto.setPositionImg("test_Update");
+        // test
+        String reqUrl = "/v1/internal/${cfg.entityObjectName}/update";
+        String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.post(reqUrl, 1L)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(JSON.toJSONString(articleDto))
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        Boolean response = TestUtil.parseObj(contentAsString, Boolean.class);
+        // assert
+        assertThat(response, is(true));
+        ArticleDto response2 = getInfo(id);
+        assertThat(response2.getCode(), is("test_Update"));
+        assertThat(response2.getTitle(), is("test_Update"));
+        assertThat(response2.getContent(), is("test_Update"));
+        assertThat(response2.getPosition(), is("test_Update"));
+        assertThat(response2.getPositionImg(), is("test_Update"));
+    }
+
+    @Test
+    public void deleteArticle() {
+    }
+
+    @Test
+    public void getArticle() {
+    }
+
+    @Test
+    public void getArticlePageList() {
+    }
+
+    public Page<ArticleDto> pageArticle() throws Exception {
+        String reqUrl = "/v1/internal/${cfg.entityObjectName}/pageList";
+        String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.post(reqUrl, 1L)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .content(JSON.toJSONString(new ArticleQueryParam()))
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        return TestUtil.parsePage(contentAsString, ArticleDto.class);
+    }
+
+    public ArticleDto getInfo(String id) throws Exception {
+        String reqUrl = "/v1/internal/${cfg.entityObjectName}/info/" + id;
+        String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.get(reqUrl)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk())
+                .andReturn().getResponse().getContentAsString();
+        return TestUtil.parseObj(contentAsString, ${entity}.class);
+    }
+
+}

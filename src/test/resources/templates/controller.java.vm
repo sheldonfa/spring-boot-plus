@@ -96,7 +96,7 @@ public class ${table.controllerName} {
         if(CommonUtils.empty(${cfg.entityObjectName}Dto.get${cfg.pkIdCamelNameCapitalFirst}())){
             throw ExceptionUtil.paramRequired("${cfg.pkIdCamelName}");
         }
-        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto);
+        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, true);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
 #else
