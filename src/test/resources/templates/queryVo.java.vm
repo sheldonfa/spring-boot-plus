@@ -47,26 +47,6 @@ public class ${entity}QueryVo implements Serializable {
      */
      #end
 #end
-#if(${field.keyFlag})
-## 普通字段
-#elseif(${field.fill})
-## -----   存在字段填充设置   -----
-#if(${field.convert})
-    @TableField(value = "${field.name}", fill = FieldFill.${field.fill})
-#else
-    @TableField(fill = FieldFill.${field.fill})
-#end
-#elseif(${field.convert})
-    @TableField("${field.name}")
-#end
-## 乐观锁注解
-#if(${versionFieldName}==${field.name})
-    @Version
-#end
-## 逻辑删除注解
-#if(${logicDeleteFieldName}==${field.name})
-    @TableLogic
-#end
 private ${field.propertyType} ${field.propertyName};
 #end
 ## ----------  END 字段循环遍历  ----------
@@ -101,16 +81,7 @@ private ${field.propertyType} ${field.propertyName};
 
 #end
 #end
-#if(${activeRecord})
-    @Override
-    protected Serializable pkVal() {
-#if(${keyPropertyName})
-        return this.${keyPropertyName};
-#else
-        return null;
-#end
-    }
-#end
+
 #if(!${entityLombokModel})
     @Override
     public String toString() {

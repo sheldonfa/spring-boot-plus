@@ -258,7 +258,7 @@ public class CodeGenerator {
         gc.setAuthor(author);
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(false);               // 启用swagger注解
-        gc.setIdType(IdType.ID_WORKER);     // 主键类型:ID_WORKER
+        gc.setIdType(IdType.ID_WORKER_STR);     // 主键类型:ID_WORKER
         gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
@@ -362,7 +362,7 @@ public class CodeGenerator {
                 // 是否生成Shiro RequiresPermissions注解
                 map.put("requiresPermissions", requiresPermissions);
                 // request mapping 前缀
-                map.put("requestMapPrefix", StringPool.SLASH + "v1" + StringPool.SLASH + "internal" + StringPool.SLASH);
+                map.put("requestMapPrefix", StringPool.SLASH + "v1" + StringPool.SLASH + "api" + StringPool.SLASH);
                 this.setMap(map);
             }
         };

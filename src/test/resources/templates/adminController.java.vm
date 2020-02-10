@@ -53,7 +53,7 @@ class ${table.controllerName}#if(${superControllerClass}) : ${superControllerCla
 
 #else
 #if(${superControllerClass})
-public class Admin${table.controllerName} extends ${superControllerClass} {
+public class Admin${table.controllerName} {
 #else
 public class Admin${table.controllerName} {
 #end

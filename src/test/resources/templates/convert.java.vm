@@ -15,8 +15,8 @@ import io.geekidea.springbootplus.util.CommonUtils;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
-
 import com.google.common.collect.Lists;
+import java.util.stream.Collectors;
 
 /**
  * <pre>
@@ -30,39 +30,43 @@ import com.google.common.collect.Lists;
 public class ${entity}Convert {
 
     public static ${entity}Dto to${entity}Dto(${entity} entity) {
-        ${entity}Dto dto = new ${entity}Dto();
-        if(Objects.isNull(entity)){
+            ${entity}Dto dto = new ${entity}Dto();
+        if (Objects.isNull(entity)) {
             return null;
         }
-#foreach($field in ${table.fields})
-        ## ----------  BEGIN 字段循环遍历  ----------
-        dto.set${field.capitalName}(entity.get${field.capitalName}());
-        ## ----------  END 字段循环遍历  ----------
-#end
+        #foreach($field in ${table.fields})
+            #if(!${field.keyIdentityFlag})
+            ## ----------  BEGIN 字段循环遍历  ----------
+                dto.set${field.capitalName}(entity.get${field.capitalName}());
+            ## ----------  END 字段循环遍历  ----------
+            #end
+        #end
         return dto;
     }
 
-    public static ${entity} to${entity}(${entity}Dto dto,Boolean remainId) {
-            ${entity} entity = new ${entity}();
-    if(Objects.isNull(dto)){
-        return null;
-    }
-#foreach($field in ${table.fields})
-        ## ----------  BEGIN 字段循环遍历  ----------
-        #if(${field.keyFlag})
-            if (remainId) {
-                entity.set${field.capitalName}(dto.get${field.capitalName}());
-            }
-        #else
-            entity.set${field.capitalName}(dto.get${field.capitalName}());
+    public static ${entity} to${entity}(${entity}Dto dto, Boolean remainPk) {
+        ${entity} entity = new ${entity}();
+        if (Objects.isNull(dto)) {
+            return null;
+        }
+        #foreach($field in ${table.fields})
+            #if(!${field.keyIdentityFlag})
+            ## ----------  BEGIN 字段循环遍历  ----------
+                #if(${field.comment.indexOf("业务主键")}!=-1)
+                    if (remainPk) {
+                        entity.set${field.capitalName}(dto.get${field.capitalName}());
+                    }
+                #else
+                    entity.set${field.capitalName}(dto.get${field.capitalName}());
+                #end
+            ## ----------  END 字段循环遍历  ----------
+            #end
         #end
-    ## ----------  END 字段循环遍历  ----------
-#end
         return entity;
     }
 
     public static List<${entity}Dto> to${entity}DtoList(List<${entity}> entities) {
-        if(CommonUtils.empty(entities)){
+        if (CommonUtils.empty(entities)) {
             return Lists.newArrayList();
         }
         return entities.stream().map(${entity}Convert::to${entity}Dto).collect(Collectors.toList());

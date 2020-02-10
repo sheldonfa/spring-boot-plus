@@ -59,7 +59,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    ${entity} get${entity}ById(Serializable id) throws Exception;
+    ${entity} get${entity}ByPk(Serializable id) throws Exception;
 
     /**
      * 获取分页对象

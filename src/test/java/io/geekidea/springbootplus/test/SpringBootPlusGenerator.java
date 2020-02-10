@@ -29,10 +29,17 @@ public class SpringBootPlusGenerator {
         // 公共配置
         // 数据库配置
         codeGenerator
+                /**
+                 * 开发环境
+                 */
                 .setUserName("xp_seagull")
                 .setPassword("eWJw5zUkXa3Gz1lR")
                 .setDriverName("com.mysql.jdbc.Driver")
                 .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+        /**
+         * 本地
+         */
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8" );
 
         // 包信息
         codeGenerator
@@ -78,13 +85,31 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
+                /**
+                 * seagull
+                */
                 "banner",
                 "entry",
                 "leave_info",
                 "order_log",
                 "pay_order",
                 "sign_secret",
-                "article"
+                "article",
+                "bulletin"
+                /**
+                 * xp-lark-goods
+                */
+//                "category",
+//                "purchase_limit",
+//                "sku",
+//                "sku_spec",
+//                "sku_spec_value",
+//                "spu",
+//                "spu_detail",
+//                "spu_version",
+//                "stock",
+//                "store",
+//                "sys_log",
         };
 
         // 循环生成

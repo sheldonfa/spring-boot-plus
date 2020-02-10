@@ -73,7 +73,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
 #end
     public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
-        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto);
+        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, false);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
 #else
@@ -100,7 +100,7 @@ public class ${table.controllerName} {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
 #else
-        boolean flag = ${cfg.serviceObjectName}.updateById(${cfg.entityObjectName});
+        boolean flag = ${cfg.serviceObjectName}.updateByPk(${cfg.entityObjectName});
 #end
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
@@ -119,7 +119,7 @@ public class ${table.controllerName} {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.delete${entity}(id);
 #else
-        boolean flag = ${cfg.serviceObjectName}.removeById(id);
+        boolean flag = ${cfg.serviceObjectName}.removeByPk(id);
 #end
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
@@ -135,7 +135,7 @@ public class ${table.controllerName} {
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
 #end
     public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("id") Long id) throws Exception {
-        ${entity} ${cfg.entityObjectName} = ${cfg.serviceObjectName}.get${entity}ById(id);
+        ${entity} ${cfg.entityObjectName} = ${cfg.serviceObjectName}.get${entity}ByPk(id);
         ${entity}Dto ${cfg.entityObjectName}Dto =  ${entity}Convert.to${entity}Dto(${cfg.entityObjectName});
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),${cfg.entityObjectName}Dto);
     }

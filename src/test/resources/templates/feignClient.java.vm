@@ -79,7 +79,7 @@ public interface  ${table.controllerName}Client {
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:info")
 #end
-    ResponseWrapper<${entity}Dto> get${entity}ById(@PathVariable("id") Long id)ById;
+    ResponseWrapper<${entity}Dto> get${entity}ById(@PathVariable("id") Long id);
 
     /**
      * $!{table.comment}分页列表

@@ -5,7 +5,7 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 #end
 #if(${entityLombokModel})
-import javax.validation.constraints.NotBlank;
+import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -35,32 +35,33 @@ public class ${entity}Dto implements Serializable {
     private static final long serialVersionUID = 1L;
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
-
-#if(${field.keyFlag})
-#set($keyPropertyName=${field.propertyName})
-#end
-#if("$!field.comment" != "")
-    #if(${swagger2})
-@ApiModelProperty(value = "${field.comment}")
-    #else
-/**
-     * ${field.comment}
-     */
-     #end
-#end
+#if(!${field.keyIdentityFlag})
+    #if(${field.keyFlag})
+        #set($keyPropertyName=${field.propertyName})
+    #end
+    #if("$!field.comment" != "")
+        #if(${swagger2})
+        @ApiModelProperty(value = "${field.comment}")
+        #else
+        /**
+         * ${field.comment}
+         */
+        #end
+    #end
 ## 乐观锁注解
-#if(${versionFieldName}==${field.name})
+    #if(${versionFieldName}==${field.name})
     @Version
-#end
+    #end
 ## 主键是生成的，不需要传
-#if(!${field.keyFlag})
-#if(${field.propertyType} == 'String')
-@NotBlank(message = "${field.comment}不能为空")
-#else
-@NotNull(message = "${field.comment}不能为空")
+    #if(!${field.keyFlag})
+        #if(${field.propertyType} == 'String')
+        @NotBlank(message = "${field.comment}不能为空")
+        #else
+        @NotNull(message = "${field.comment}不能为空")
+        #end
+    #end
+private ${field.propertyType} ${field.propertyName};
 #end
-#end
-    private ${field.propertyType} ${field.propertyName};
 #end
 ## ----------  END 字段循环遍历  ----------
 #if(!${entityLombokModel})

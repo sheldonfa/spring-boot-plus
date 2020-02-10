@@ -32,6 +32,8 @@ import ${cfg.idParamPath};
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
+import org.springframework.test.annotation.Rollback;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * <pre>
@@ -43,88 +45,93 @@ import static org.hamcrest.Matchers.*;
  */
 @SpringBootTest
 @ActiveProfiles("ut")
+@Rollback
+@Transactional
 public class ${table.controllerName}Test extends BaseTest {
 
     @Test
-    @Rollback
-    public void addArticle() throws Exception {
+    public void add${entity}() throws Exception {
         // 参数
         //TODO
-        ArticleDto articleDto = new ArticleDto();
-        articleDto.setTitle("test title");
+        ${entity}Dto dto = new ${entity}Dto();
         // test
-        String reqUrl = "/v1/internal/${cfg.entityObjectName}/add";
+        String reqUrl = "/v1/api/${cfg.entityObjectName}/add";
         String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.post(reqUrl, 1L)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(JSON.toJSONString(articleDto))
+                .content(JSON.toJSONString(dto))
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         Boolean response = TestUtil.parseObj(contentAsString, Boolean.class);
         // assert
         assertThat(response, is(true));
-        Page<ArticleDto> response2 = pageArticle();
-        assertThat(response2.getRecords().size(), is(2));
+        Page<${entity}Dto> query = pageList();
+        assertThat(query.getRecords().size(), is(2));
     }
 
     @Test
-    public void updateArticle() throws Exception {
+    public void update${entity}() throws Exception {
         // 参数
-        String id = "1204587066231980034";
-        ArticleDto articleDto = new ArticleDto();
-        articleDto.setId(id);
-        articleDto.setTitle("test_Update");
-        articleDto.setContent("test_Update");
-        articleDto.setCode("test_Update");
-        articleDto.setPosition("test_Update");
-        articleDto.setPositionImg("test_Update");
+        //TODO
+        ${entity}Dto dto = new ${entity}Dto();
         // test
-        String reqUrl = "/v1/internal/${cfg.entityObjectName}/update";
+        String reqUrl = "/v1/api/${cfg.entityObjectName}/update";
         String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.post(reqUrl, 1L)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(JSON.toJSONString(articleDto))
+                .content(JSON.toJSONString(dto))
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
         Boolean response = TestUtil.parseObj(contentAsString, Boolean.class);
         // assert
         assertThat(response, is(true));
-        ArticleDto response2 = getInfo(id);
-        assertThat(response2.getCode(), is("test_Update"));
-        assertThat(response2.getTitle(), is("test_Update"));
-        assertThat(response2.getContent(), is("test_Update"));
-        assertThat(response2.getPosition(), is("test_Update"));
-        assertThat(response2.getPositionImg(), is("test_Update"));
+        Page<${entity}Dto> query = pageList();
+        // TODO 判断更新的值可以查询出来
+        assertThat(query.getRecords().size(), is(2));
     }
 
     @Test
-    public void deleteArticle() {
+    public void delete${entity}() throws Exception {
+        // 参数
+        //TODO 输入预设值的主键
+        String ${cfg.entityObjectName}Id = "1234" ;
+        // test
+        String reqUrl = "/v1/api/${entity}/delete/"+${cfg.entityObjectName}Id ;
+        String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.delete(reqUrl, 1L)
+                .contentType(MediaType.APPLICATION_JSON_UTF8)
+                .accept(MediaType.APPLICATION_JSON_UTF8))
+                .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
+        Boolean response = TestUtil.parseObj(contentAsString, Boolean.class);
+        // assert
+        assertThat(response, is(true));
+        ${entity}Dto ${cfg.entityObjectName} = getInfo(${cfg.entityObjectName}Id);
+        assertThat(${cfg.entityObjectName}, is(nullValue()));
     }
 
     @Test
-    public void getArticle() {
+    public void get${entity}() throws Exception {
     }
 
     @Test
-    public void getArticlePageList() {
+    public void get${entity}PageList() throws Exception {
     }
 
-    public Page<ArticleDto> pageArticle() throws Exception {
-        String reqUrl = "/v1/internal/${cfg.entityObjectName}/pageList";
+    public Page<${entity}Dto> pageList() throws Exception {
+        String reqUrl = "/v1/api/${cfg.entityObjectName}/pageList";
         String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.post(reqUrl, 1L)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
-                .content(JSON.toJSONString(new ArticleQueryParam()))
+                .content(JSON.toJSONString(new ${entity}QueryParam()))
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        return TestUtil.parsePage(contentAsString, ArticleDto.class);
+        return TestUtil.parsePage(contentAsString, ${entity}Dto.class);
     }
 
-    public ArticleDto getInfo(String id) throws Exception {
-        String reqUrl = "/v1/internal/${cfg.entityObjectName}/info/" + id;
+    public ${entity}Dto getInfo(String id) throws Exception {
+        String reqUrl = "/v1/api/${cfg.entityObjectName}/info/" + id;
         String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.get(reqUrl)
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
-        return TestUtil.parseObj(contentAsString, ${entity}.class);
+        return TestUtil.parseObj(contentAsString, ${entity}Dto.class);
     }
 
 }
