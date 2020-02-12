@@ -50,6 +50,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class ${table.controllerName}Test extends BaseTest {
 
     @Test
+    @Rollback
     public void add${entity}() throws Exception {
         // 参数
         //TODO
@@ -69,6 +70,7 @@ public class ${table.controllerName}Test extends BaseTest {
     }
 
     @Test
+    @Rollback
     public void update${entity}() throws Exception {
         // 参数
         //TODO
@@ -89,12 +91,13 @@ public class ${table.controllerName}Test extends BaseTest {
     }
 
     @Test
+    @Rollback
     public void delete${entity}() throws Exception {
         // 参数
         //TODO 输入预设值的主键
         String ${cfg.entityObjectName}Id = "1234" ;
         // test
-        String reqUrl = "/v1/api/${entity}/delete/"+${cfg.entityObjectName}Id ;
+        String reqUrl = "/v1/api/${cfg.entityObjectName}/delete/"+${cfg.entityObjectName}Id ;
         String contentAsString = this.mockMvc.perform(RestDocumentationRequestBuilders.delete(reqUrl, 1L)
                 .contentType(MediaType.APPLICATION_JSON_UTF8)
                 .accept(MediaType.APPLICATION_JSON_UTF8))

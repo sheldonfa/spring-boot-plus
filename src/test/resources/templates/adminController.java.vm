@@ -77,6 +77,7 @@ public class Admin${table.controllerName} {
         try {
             flag = seagullDataServiceClient.add${entity}(${cfg.entityObjectName}Dto);
         } catch (Exception e) {
+            Log.error("add${entity}", e);
             throw ExceptionUtil.dataServiceError("add${entity}");
         }
         return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag.getData());
@@ -100,6 +101,7 @@ public class Admin${table.controllerName} {
         try {
             flag = seagullDataServiceClient.update${entity}(${cfg.entityObjectName}Dto);
         } catch (Exception e) {
+            Log.error("update${entity}", e);
             throw ExceptionUtil.dataServiceError("update${entity}");
         }
         return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag.getData());
@@ -108,18 +110,19 @@ public class Admin${table.controllerName} {
     /**
      * 删除$!{table.comment}
      */
-    @DeleteMapping("/delete/{id}")
+    @PostMapping("/delete")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end
 #if(${swagger2})
     @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> delete${entity}(@PathVariable("id") Long id) throws Exception {
+    public ResponseWrapper<Boolean> delete${entity}(@RequestParam("id") Long id) throws Exception {
         ResponseWrapper<Boolean> flag;
         try {
             flag = seagullDataServiceClient.delete${entity}(id);
         } catch (Exception e) {
+            Log.error("delete${entity}", e);
             throw ExceptionUtil.dataServiceError("delete${entity}");
         }
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag.getData());
@@ -128,18 +131,19 @@ public class Admin${table.controllerName} {
     /**
      * 获取$!{table.comment}
      */
-    @GetMapping("/info/{id}")
+    @GetMapping("/info")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:info")
 #end
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
 #end
-    public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("id") Long id) throws Exception {
+    public ResponseWrapper<${entity}Dto> get${entity}(@RequestParam("id") Long id) throws Exception {
         ResponseWrapper<${entity}Dto> ${cfg.entityObjectName}Wrapper;
         try {
             ${cfg.entityObjectName}Wrapper = ${cfg.serviceObjectName}.get${entity}ById(id);
         } catch (Exception e) {
+            Log.error("get${entity}", e);
             throw ExceptionUtil.dataServiceError("get${entity}");
         }
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),${cfg.entityObjectName}Wrapper.getData());
@@ -160,6 +164,7 @@ public class Admin${table.controllerName} {
         try {
             ${cfg.entityObjectName}PageWrapper = seagullDataServiceClient.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         } catch (Exception e) {
+            Log.error("get${entity}PageList", e);
             throw ExceptionUtil.dataServiceError("get${entity}PageList");
         }
         return ResponseWrapper.success(MessageCode.SUCCESS.code(), ${cfg.entityObjectName}PageWrapper.getData());

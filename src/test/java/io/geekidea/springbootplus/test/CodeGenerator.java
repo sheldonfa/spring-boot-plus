@@ -76,7 +76,7 @@ public class CodeGenerator {
     /**
      * 包名称
      */
-    private String packageController = "controller";
+    private String packageController = "controller" ;
 
     // ############################ 自定义配置部分 start ############################
     /**
@@ -94,7 +94,7 @@ public class CodeGenerator {
     /**
      * 主键数据库列名称
      */
-    private String pkIdColumnName = "id";
+    private String pkIdColumnName = "id" ;
     /**
      * 代码生成策略 true：All/false:SIMPLE
      * 0. SIMPLE 生成最基本的代码
@@ -223,25 +223,25 @@ public class CodeGenerator {
      * 初始化变量
      */
     public void init() {
-        this.commonParentPackage = this.parentPackage + ".common";
+        this.commonParentPackage = this.parentPackage + ".common" ;
         // 父类包路径
 //        this.superEntity = this.commonParentPackage + ".entity.BaseEntity";
-        this.superEntity = "com.baomidou.mybatisplus.extension.activerecord.Model";
-        this.superController = this.commonParentPackage + ".controller.BaseController";
-        this.superService = this.commonParentPackage + ".service.BaseService";
-        this.superServiceImpl = this.commonParentPackage + ".service.impl.BaseServiceImpl";
-        this.superQueryParam = this.commonParentPackage + ".param.QueryParam";
+        this.superEntity = "com.baomidou.mybatisplus.extension.activerecord.Model" ;
+        this.superController = this.commonParentPackage + ".controller.BaseController" ;
+        this.superService = this.commonParentPackage + ".service.BaseService" ;
+        this.superServiceImpl = this.commonParentPackage + ".service.impl.BaseServiceImpl" ;
+        this.superQueryParam = this.commonParentPackage + ".param.QueryParam" ;
         this.superEntityCommonColumns = new String[]{};
 
         // 公共类包路径
-        this.commonIdParam = this.commonParentPackage + ".param.IdParam";
-        this.commonApiResult = this.commonParentPackage + ".api.ResponseWrapper";
-        this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum";
-        this.commonOrderQueryParam = this.commonParentPackage + ".param.OrderQueryParam";
-        this.commonPaging = this.commonParentPackage + ".vo.Paging";
+        this.commonIdParam = this.commonParentPackage + ".param.IdParam" ;
+        this.commonApiResult = this.commonParentPackage + ".api.ResponseWrapper" ;
+        this.commonOrderEnum = this.commonParentPackage + ".enums.OrderEnum" ;
+        this.commonOrderQueryParam = this.commonParentPackage + ".param.OrderQueryParam" ;
+        this.commonPaging = this.commonParentPackage + ".vo.Paging" ;
 
         // mybatis配置
-        this.logicDeleteFieldName = "is_delete";
+        this.logicDeleteFieldName = "is_delete" ;
     }
 
     /**
@@ -259,7 +259,8 @@ public class CodeGenerator {
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(false);               // 启用swagger注解
         gc.setIdType(IdType.ID_WORKER_STR);     // 主键类型:ID_WORKER
-        gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        gc.setServiceName("Data%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        gc.setServiceImplName("Data%sServiceImpl");
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
         gc.setActiveRecord(true);           // ActiveRecord 模式 CRUD
@@ -298,7 +299,7 @@ public class CodeGenerator {
                 Map<String, Object> map = new HashMap<>();
                 map.put("customField", "Hello " + this.getConfig().getGlobalConfig().getAuthor());
                 // 查询参数包路径
-                String queryParamPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".param";
+                String queryParamPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".param" ;
                 map.put("queryParamPackage", queryParamPackage);
                 // 查询参数类路径
                 map.put("queryParamPath", queryParamPackage + StringPool.DOT + pascalTableName + "QueryParam");
@@ -307,27 +308,27 @@ public class CodeGenerator {
                 // 查询参数共公包路径
                 map.put("idParamPath", commonIdParam);
                 // 响应结果包路径
-                String queryVoPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".vo";
+                String queryVoPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".vo" ;
                 map.put("queryVoPackage", queryVoPackage);
                 // 响应结果类路径
                 map.put("queryVoPath", queryVoPackage + StringPool.DOT + pascalTableName + "QueryVo");
                 // Dto包路径
-                String dtoPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".dto";
+                String dtoPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".dto" ;
                 map.put("dtoPackage", dtoPackage);
                 // Dto类路径
                 map.put("dtoPath", dtoPackage + StringPool.DOT + pascalTableName + "Dto");
                 // Convert包路径
-                String convertPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".convert";
+                String convertPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".convert" ;
                 map.put("convertPackage", convertPackage);
                 // Convert类路径
                 map.put("convertPath", convertPackage + StringPool.DOT + pascalTableName + "Convert");
                 // AdminController包路径
-                String adminControllerPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".admin";
+                String adminControllerPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".admin" ;
                 map.put("adminControllerPackage", adminControllerPackage);
                 // AdminController类路径
                 map.put("adminControllerPath", adminControllerPackage + StringPool.DOT + "Admin" + pascalTableName + "Controller");
                 // feignClient包路径
-                String feignClientPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".feign";
+                String feignClientPackage = parentPackage + StringPool.DOT + pc.getModuleName() + ".feign" ;
                 map.put("feignClientPackage", feignClientPackage);
                 // feignClient类路径
                 map.put("feignClientPath", feignClientPackage + StringPool.DOT + pascalTableName + "ControllerClient");
@@ -441,7 +442,7 @@ public class CodeGenerator {
             focList.add(new FileOutConfig("/templates/controllerTest.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/test/"  + tableInfo.getEntityName() + "ControllerTest" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/test/" + tableInfo.getEntityName() + "ControllerTest" + StringPool.DOT_JAVA;
                 }
             });
         }
