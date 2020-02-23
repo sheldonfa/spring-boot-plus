@@ -259,6 +259,7 @@ public class CodeGenerator {
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(false);               // 启用swagger注解
         gc.setIdType(IdType.ID_WORKER_STR);     // 主键类型:ID_WORKER
+        gc.setControllerName("Data%sController");
         gc.setServiceName("Data%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
         gc.setServiceImplName("Data%sServiceImpl");
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
@@ -363,7 +364,7 @@ public class CodeGenerator {
                 // 是否生成Shiro RequiresPermissions注解
                 map.put("requiresPermissions", requiresPermissions);
                 // request mapping 前缀
-                map.put("requestMapPrefix", StringPool.SLASH + "v1" + StringPool.SLASH + "api" + StringPool.SLASH);
+                map.put("requestMapPrefix", StringPool.SLASH + "v1" + StringPool.SLASH + "internal" + StringPool.SLASH);
                 this.setMap(map);
             }
         };
@@ -443,6 +444,24 @@ public class CodeGenerator {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
                     return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/test/" + tableInfo.getEntityName() + "ControllerTest" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+        // 自定义service模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/service.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+        // 自定义serviceImpl模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/serviceImpl.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/impl" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
                 }
             });
         }

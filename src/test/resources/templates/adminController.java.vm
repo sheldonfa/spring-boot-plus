@@ -72,15 +72,10 @@ public class Admin${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
-        ResponseWrapper<Boolean> flag;
-        try {
-            flag = seagullDataServiceClient.add${entity}(${cfg.entityObjectName}Dto);
-        } catch (Exception e) {
-            Log.error("add${entity}", e);
-            throw ExceptionUtil.dataServiceError("add${entity}");
-        }
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag.getData());
+    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam ${cfg.entityObjectName}Dto) {
+        AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
+        Boolean flag = tkdService.addTkd(AdminTkdConvert.tkdAddParamToTkdDto(param), currentUser);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
     }
 
     /**
@@ -93,18 +88,10 @@ public class Admin${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
-        if(CommonUtils.empty(${cfg.entityObjectName}Dto.get${cfg.pkIdCamelNameCapitalFirst}())){
-            throw ExceptionUtil.paramRequired("${cfg.pkIdCamelName}");
-        }
-        ResponseWrapper<Boolean> flag;
-        try {
-            flag = seagullDataServiceClient.update${entity}(${cfg.entityObjectName}Dto);
-        } catch (Exception e) {
-            Log.error("update${entity}", e);
-            throw ExceptionUtil.dataServiceError("update${entity}");
-        }
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag.getData());
+    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}UpdateParam ${cfg.entityObjectName}Dto) {
+        AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
+        Boolean flag = tkdService.updateTkd(AdminTkdConvert.tkdAddParamToTkdDto(param), currentUser);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
     }
 
     /**
@@ -117,7 +104,7 @@ public class Admin${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> delete${entity}(@RequestParam("id") Long id) throws Exception {
+    public ResponseWrapper<Boolean> delete${entity}(@RequestParam("recordId") String recordId) {
         ResponseWrapper<Boolean> flag;
         try {
             flag = seagullDataServiceClient.delete${entity}(id);
@@ -138,15 +125,9 @@ public class Admin${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
 #end
-    public ResponseWrapper<${entity}Dto> get${entity}(@RequestParam("id") Long id) throws Exception {
-        ResponseWrapper<${entity}Dto> ${cfg.entityObjectName}Wrapper;
-        try {
-            ${cfg.entityObjectName}Wrapper = ${cfg.serviceObjectName}.get${entity}ById(id);
-        } catch (Exception e) {
-            Log.error("get${entity}", e);
-            throw ExceptionUtil.dataServiceError("get${entity}");
-        }
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(),${cfg.entityObjectName}Wrapper.getData());
+    public ResponseWrapper<${entity}Dto> get${entity}(@RequestParam("recordId") String recordId) {
+        TkdDto tkd = tkdService.getTkdByPk(id);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(), tkd);
     }
 
     /**
@@ -159,15 +140,9 @@ public class Admin${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
 #end
-    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        ResponseWrapper<Page<${entity}Dto>> ${cfg.entityObjectName}PageWrapper;
-        try {
-            ${cfg.entityObjectName}PageWrapper = seagullDataServiceClient.get${entity}PageList(${cfg.entityObjectName}QueryParam);
-        } catch (Exception e) {
-            Log.error("get${entity}PageList", e);
-            throw ExceptionUtil.dataServiceError("get${entity}PageList");
-        }
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), ${cfg.entityObjectName}PageWrapper.getData());
+    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
+        Page<TkdDto> page  = tkdService.getTkdPageList(tkdQueryParam);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(), page);
     }
 #end
 

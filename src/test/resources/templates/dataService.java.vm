@@ -31,7 +31,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean save${entity}(${entity} ${cfg.entityObjectName});
+    boolean save${entity}(${entity} ${cfg.entityObjectName}) throws Exception;
 
     /**
      * 修改
@@ -40,7 +40,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean update${entity}(${entity} ${cfg.entityObjectName});
+    boolean update${entity}(${entity} ${cfg.entityObjectName}) throws Exception;
 
     /**
      * 删除
@@ -49,7 +49,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean delete${entity}(Long id);
+    boolean delete${entity}(Long id) throws Exception;
 #end
 
     /**
@@ -59,7 +59,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    ${entity} get${entity}ByPk(Serializable id);
+    ${entity} get${entity}ByPk(Serializable id) throws Exception;
 
     /**
      * 获取分页对象
@@ -68,7 +68,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    Page<TkdDto> getTkdPageList(TkdQueryParam tkdQueryParam);
+        IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
 #end
 
 }

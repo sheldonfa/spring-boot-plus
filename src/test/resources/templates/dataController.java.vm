@@ -72,7 +72,7 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
+    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
         ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, false);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
@@ -92,10 +92,7 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
-        if(CommonUtils.empty(${cfg.entityObjectName}Dto.get${cfg.pkIdCamelNameCapitalFirst}())){
-            throw ExceptionUtil.paramRequired("${cfg.pkIdCamelName}");
-        }
+    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
         ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, true);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
@@ -108,14 +105,14 @@ public class ${table.controllerName} {
     /**
      * 删除$!{table.comment}
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/delete/{recordId}")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end
 #if(${swagger2})
     @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> delete${entity}(@PathVariable("id") Long id) throws Exception {
+    public ResponseWrapper<Boolean> delete${entity}(@PathVariable("recordId") String recordId) {
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.delete${entity}(id);
 #else
@@ -127,14 +124,14 @@ public class ${table.controllerName} {
     /**
      * 获取$!{table.comment}
      */
-    @GetMapping("/info/{id}")
+    @GetMapping("/info/{recordId}")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:info")
 #end
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
 #end
-    public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("id") Long id) throws Exception {
+    public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("recordId") String recordId) {
         ${entity} ${cfg.entityObjectName} = ${cfg.serviceObjectName}.get${entity}ByPk(id);
         ${entity}Dto ${cfg.entityObjectName}Dto =  ${entity}Convert.to${entity}Dto(${cfg.entityObjectName});
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),${cfg.entityObjectName}Dto);
@@ -150,7 +147,7 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
 #end
-    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
         IPage<${entity}> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         // new page
         Page<${entity}Dto> page = new Page<>();

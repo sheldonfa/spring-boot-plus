@@ -36,10 +36,18 @@ public class SpringBootPlusGenerator {
                 .setPassword("eWJw5zUkXa3Gz1lR")
                 .setDriverName("com.mysql.jdbc.Driver")
                 .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-        /**
-         * 本地
-         */
+                /**
+                 * 本地
+                 */
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8" );
+                /**
+                 * yunzhe
+                 */
+//                .setUserName("root")
+//                .setPassword("Abcd1234")
+//                .setDriverName("com.mysql.jdbc.Driver")
+//                .setDriverUrl("jdbc:mysql://47.92.203.100:3306/tensquare_base?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+
 
         // 包信息
         codeGenerator
@@ -88,14 +96,16 @@ public class SpringBootPlusGenerator {
                 /**
                  * seagull
                 */
-                "banner",
-                "entry",
-                "leave_info",
-                "order_log",
-                "pay_order",
-                "sign_secret",
-                "article",
-                "bulletin"
+//                "banner",
+//                "entry",
+//                "leave_info",
+//                "order_log",
+//                "pay_order",
+//                "sign_secret",
+//                "article",
+//                "bulletin",
+//                "home"
+                "tkd",
                 /**
                  * xp-lark-goods
                 */
@@ -110,6 +120,10 @@ public class SpringBootPlusGenerator {
 //                "stock",
 //                "store",
 //                "sys_log",
+
+//                "tb_city",
+//                "tb_label",
+//                "tb_ul",
         };
 
         // 循环生成

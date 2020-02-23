@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @date ${date}
  */
 
-public class ${entity}Convert {
+public class ${entity}Convertor {
 
     public static ${entity}Dto to${entity}Dto(${entity} entity) {
             ${entity}Dto dto = new ${entity}Dto();
@@ -52,13 +52,7 @@ public class ${entity}Convert {
         #foreach($field in ${table.fields})
             #if(!${field.keyIdentityFlag})
             ## ----------  BEGIN 字段循环遍历  ----------
-                #if(${field.comment.indexOf("业务主键")}!=-1)
-                    if (remainPk) {
-                        entity.set${field.capitalName}(dto.get${field.capitalName}());
-                    }
-                #else
                     entity.set${field.capitalName}(dto.get${field.capitalName}());
-                #end
             ## ----------  END 字段循环遍历  ----------
             #end
         #end

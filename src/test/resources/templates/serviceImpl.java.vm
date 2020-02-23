@@ -36,26 +36,62 @@ open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperNam
 
 }
 #else
-public class Data${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
 
     @Autowired
     private ${table.mapperName} ${cfg.mapperObjectName};
 #if(${cfg.generatorStrategy} != 'SIMPLE')
 #if(${cfg.generatorStrategy} == 'ALL')
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean save${entity}(${entity} ${cfg.entityObjectName}) throws Exception {
-        return super.save(${cfg.entityObjectName});
+        ResponseWrapper<Boolean> flag;
+        // 添加操作人邮箱、id、名称
+        tkdDto.setOperateId(currentUser.getUid());
+        tkdDto.setOperateName(currentUser.getUsername());
+        tkdDto.setOperateEmail(currentUser.getEmail());
+        ResponseWrapper<TkdDto> tkdDtoResponseWrapper;
+        try {
+        tkdDtoResponseWrapper = seagullDataServiceClient.getTkdByCode(tkdDto.getCode());
+        } catch (Exception e) {
+        Log.error("seagullDataServiceClient.getTkdByCode", e);
+        throw ExceptionUtil.dataServiceError("seagullDataServiceClient.getTkdByCode");
+        }
+        if (Objects.nonNull(tkdDtoResponseWrapper.getData())) {
+        throw ExceptionUtil.invalidParam(String.format("当前code的tkd已经存在，code=%s", tkdDtoResponseWrapper.getCode()));
+        }
+        try {
+        flag = seagullDataServiceClient.addTkd(tkdDto);
+        // 删除缓存
+        redisUtil.del(String.join(RedisConstant.SEPARATOR, RedisConstant.XP_SEAGULL_TKD, tkdDto.getCode()));
+        } catch (Exception e) {
+        Log.error("addTkd", e);
+        throw ExceptionUtil.dataServiceError("addTkd");
+        }
+        return flag.getData();
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update${entity}(${entity} ${cfg.entityObjectName}) throws Exception {
-        return super.updateById(${cfg.entityObjectName});
+        ResponseWrapper<Boolean> flag;
+        // 添加操作人邮箱、id、名称
+        tkdDto.setOperateId(currentUser.getUid());
+        tkdDto.setOperateName(currentUser.getUsername());
+        tkdDto.setOperateEmail(currentUser.getEmail());
+        try {
+        flag = seagullDataServiceClient.deleteTkd(tkdDto.getRecordId());
+        if (flag.getData()) {
+        seagullDataServiceClient.addTkd(tkdDto);
+        }
+        // 删除缓存
+        redisUtil.del(String.join(RedisConstant.SEPARATOR, RedisConstant.XP_SEAGULL_TKD, tkdDto.getCode()));
+        } catch (Exception e) {
+        Log.error("updateTkd", e);
+        throw ExceptionUtil.dataServiceError("updateTkd");
+        }
+        return flag.getData();
     }
 
-    @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean delete${entity}(Long id) throws Exception {
         return super.removeById(id);
@@ -63,14 +99,20 @@ public class Data${table.serviceImplName} extends BaseServiceImpl<${table.mapper
 #end
 
     @Override
-    public ${entity} get${entity}ById(Serializable id) throws Exception {
+    public ${entity} get${entity}ByPk(Serializable id) throws Exception {
         return getById(id);
     }
 
     @Override
     public IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
-        Page<${entity}> page = setPageParam(${cfg.entityObjectName}QueryParam, OrderItem.desc("create_time"));
-        return page(page, Wrappers.<${entity}>lambdaQuery().orderByDesc(${entity}::getCreateTime));
+        ResponseWrapper<Page<TkdDto>> tkdPageWrapper;
+        try {
+        tkdPageWrapper = seagullDataServiceClient.getTkdPageList(tkdQueryParam);
+        } catch (Exception e) {
+        Log.error("getTkdPageList", e);
+        throw ExceptionUtil.dataServiceError("getTkdPageList");
+        }
+        return tkdPageWrapper.getData();
     }
 #end
 

@@ -48,7 +48,7 @@ public interface  ${table.controllerName}Client {
     /**
      * 添加$!{table.comment}
      */
-    @PostMapping("/add")
+    @PostMapping("/${cfg.colonTableName}/add")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:add")
 #end
@@ -57,7 +57,7 @@ public interface  ${table.controllerName}Client {
     /**
      * 修改$!{table.comment}
      */
-    @PostMapping("/update")
+    @PostMapping("/${cfg.colonTableName}/update")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
@@ -66,25 +66,25 @@ public interface  ${table.controllerName}Client {
     /**
      * 删除$!{table.comment}
      */
-    @DeleteMapping("/delete/{id}")
+    @DeleteMapping("/${cfg.colonTableName}/delete/{recordId}")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end
-    ResponseWrapper<Boolean> delete${entity}(@PathVariable("id") Long id);
+    ResponseWrapper<Boolean> delete${entity}(@PathVariable("recordId") String recordId);
 
     /**
      * 获取$!{table.comment}
      */
-    @GetMapping("/info/{id}")
+    @GetMapping("/${cfg.colonTableName}/info/{recordId}")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:info")
 #end
-    ResponseWrapper<${entity}Dto> get${entity}ById(@PathVariable("id") Long id);
+    ResponseWrapper<${entity}Dto> get${entity}ByPk(@PathVariable("recordId") String recordId);
 
     /**
      * $!{table.comment}分页列表
      */
-    @PostMapping("/pageList")
+    @PostMapping("/${cfg.colonTableName}/pageList")
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:page")
 #end
