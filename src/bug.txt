@@ -1,0 +1,4 @@
+2 adminController中有tkd硬编码，修改掉
+    tkdService.addTkd
+3 adminController中的delete模块要修改，
+3 缺少 通用的BizService

@@ -106,6 +106,7 @@ public class SpringBootPlusGenerator {
 //                "bulletin",
 //                "home"
                 "tkd",
+                "common_price"
                 /**
                  * xp-lark-goods
                 */

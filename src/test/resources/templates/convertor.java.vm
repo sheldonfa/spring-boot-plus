@@ -44,7 +44,7 @@ public class ${entity}Convertor {
         return dto;
     }
 
-    public static ${entity} to${entity}(${entity}Dto dto, Boolean remainPk) {
+    public static ${entity} to${entity}(${entity}Dto dto) {
         ${entity} entity = new ${entity}();
         if (Objects.isNull(dto)) {
             return null;

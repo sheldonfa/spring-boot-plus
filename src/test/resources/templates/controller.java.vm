@@ -49,7 +49,7 @@ import ${cfg.idParamPath};
 @Api("$!{table.comment} API")
 #end
 #if(${kotlin})
-class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+class Data${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
 #else
 #if(${superControllerClass})
@@ -72,7 +72,7 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
+    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) {
         ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, false);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
@@ -92,7 +92,7 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) throws Exception {
+    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) {
         ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, true);
 #if(${cfg.generatorStrategy} == 'ALL')
         boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
@@ -147,7 +147,7 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
 #end
-    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
         IPage<${entity}> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         // new page
         Page<${entity}Dto> page = new Page<>();

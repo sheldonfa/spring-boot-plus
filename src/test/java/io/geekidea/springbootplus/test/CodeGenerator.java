@@ -259,9 +259,9 @@ public class CodeGenerator {
         gc.setOpen(false);                  // 是否打开输出目录
         gc.setSwagger2(false);               // 启用swagger注解
         gc.setIdType(IdType.ID_WORKER_STR);     // 主键类型:ID_WORKER
-        gc.setControllerName("Data%sController");
-        gc.setServiceName("Data%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
-        gc.setServiceImplName("Data%sServiceImpl");
+        gc.setControllerName("%sController");
+        gc.setServiceName("%sService");     // 自定义文件命名，注意 %s 会自动填充表实体属性！
+        gc.setServiceImplName("%sServiceImpl");
         gc.setFileOverride(fileOverride);   // 是否覆盖已有文件
         gc.setDateType(DateType.ONLY_DATE); // 设置日期类型为Date
         gc.setActiveRecord(true);           // ActiveRecord 模式 CRUD
@@ -365,6 +365,7 @@ public class CodeGenerator {
                 map.put("requiresPermissions", requiresPermissions);
                 // request mapping 前缀
                 map.put("requestMapPrefix", StringPool.SLASH + "v1" + StringPool.SLASH + "internal" + StringPool.SLASH);
+                map.put("adminRequestMapPrefix", StringPool.SLASH + "v1" + StringPool.SLASH + "tool" + StringPool.SLASH);
                 this.setMap(map);
             }
         };
@@ -413,10 +414,10 @@ public class CodeGenerator {
         }
         // 自定义convert模板
         if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/convert.java.vm") {
+            focList.add(new FileOutConfig("/templates/convertor.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convert/" + tableInfo.getEntityName() + "Convert" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convert/Data" + tableInfo.getEntityName() + "Convert" + StringPool.DOT_JAVA;
                 }
             });
         }

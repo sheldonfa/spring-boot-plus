@@ -38,43 +38,28 @@ import ${cfg.idParamPath};
  * @author ${author}
  * @since ${date}
  */
-@Slf4j
-#if(${restControllerStyle})
 @RestController
-#else
-@Controller
-#end
-@RequestMapping("${cfg.requestMapPrefix}${cfg.entityObjectName}")
-#if(${swagger2})
-@Api("$!{table.comment} API")
-#end
+@RequestMapping("${cfg.adminRequestMapPrefix}${cfg.entityObjectName}")
 #if(${kotlin})
 class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
 #else
-#if(${superControllerClass})
+
 public class Admin${table.controllerName} {
-#else
-public class Admin${table.controllerName} {
-#end
 
     @Autowired
-    private SeagullDataServiceClient seagullDataServiceClient;
+    private ${table.serviceName} ${cfg.entityObjectName}Service;
 
 #if(${cfg.generatorStrategy} != 'SIMPLE')
     /**
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:add")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
-#end
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam ${cfg.entityObjectName}Dto) {
+    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam param,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
-        Boolean flag = tkdService.addTkd(AdminTkdConvert.tkdAddParamToTkdDto(param), currentUser);
+        Boolean flag = ${cfg.entityObjectName}Service.add${entity}(Admin${entity}Convertor.to${entity}Dto(param), currentUser);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
     }
 
@@ -85,12 +70,11 @@ public class Admin${table.controllerName} {
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
-#if(${swagger2})
-    @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
-#end
-    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}UpdateParam ${cfg.entityObjectName}Dto) {
+    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}UpdateParam param,
+            HttpServletRequest request,
+            HttpServletResponse response) {
         AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
-        Boolean flag = tkdService.updateTkd(AdminTkdConvert.tkdAddParamToTkdDto(param), currentUser);
+        Boolean flag = ${cfg.entityObjectName}Service.update${entity}(Admin${entity}Convertor.to${entity}Dto(param), currentUser);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
     }
 
@@ -98,50 +82,29 @@ public class Admin${table.controllerName} {
      * 删除$!{table.comment}
      */
     @PostMapping("/delete")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:delete")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ResponseWrapper.class)
-#end
-    public ResponseWrapper<Boolean> delete${entity}(@RequestParam("recordId") String recordId) {
-        ResponseWrapper<Boolean> flag;
-        try {
-            flag = seagullDataServiceClient.delete${entity}(id);
-        } catch (Exception e) {
-            Log.error("delete${entity}", e);
-            throw ExceptionUtil.dataServiceError("delete${entity}");
-        }
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag.getData());
+    public ResponseWrapper<Boolean> delete${entity}(@RequestParam("recordId") String recordId,
+                                                    HttpServletRequest request,
+                                                    HttpServletResponse response) {
+        AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
+        Boolean flag = ${cfg.entityObjectName}Service.delete${entity}ByPk(recordId, currentUser);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
     }
 
     /**
      * 获取$!{table.comment}
      */
     @GetMapping("/info")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:info")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
-#end
     public ResponseWrapper<${entity}Dto> get${entity}(@RequestParam("recordId") String recordId) {
-        TkdDto tkd = tkdService.getTkdByPk(id);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), tkd);
+            ${entity}Dto ${cfg.entityObjectName} = ${cfg.entityObjectName}Service.get${entity}ByPk(recordId);
+        return ResponseWrapper.success(MessageCode.SUCCESS.code(), ${cfg.entityObjectName});
     }
 
     /**
      * $!{table.comment}分页列表
      */
     @PostMapping("/pageList")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:page")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
-#end
     public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
-        Page<TkdDto> page  = tkdService.getTkdPageList(tkdQueryParam);
+        Page<${entity}Dto> page = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(), page);
     }
 #end
