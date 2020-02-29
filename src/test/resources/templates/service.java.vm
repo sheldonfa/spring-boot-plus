@@ -20,56 +20,50 @@ import java.io.Serializable;
 #if(${kotlin})
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
-public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
-#if(${cfg.generatorStrategy} != 'SIMPLE')
-#if(${cfg.generatorStrategy} == 'ALL')
+public interface ${table.serviceName} {
 
     /**
-     * 保存
+     * 添加$!{table.comment}
      *
-     * @param ${cfg.entityObjectName}
-     * @return
-     * @throws Exception
+     * @param ${cfg.entityObjectName}Dto
+     * @param currentUser    当前用户
+     * @return 是否成功
      */
-    boolean save${entity}(${entity} ${cfg.entityObjectName});
+    Boolean add${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
 
     /**
-     * 修改
+     * 修改$!{table.comment}
      *
-     * @param ${cfg.entityObjectName}
-     * @return
-     * @throws Exception
+     * @param ${cfg.entityObjectName}Dto
+     * @param currentUser    当前用户
+     * @return 是否成功
      */
-    boolean update${entity}(${entity} ${cfg.entityObjectName});
+    Boolean update${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
 
     /**
-     * 删除
+     * 删除${table.comment}
      *
-     * @param id
+     * @param recordId
+     * @param currentUser    当前用户
      * @return
-     * @throws Exception
      */
-    boolean delete${entity}(Long id);
-#end
+    Boolean delete${entity}ByPk(String recordId, AdminDTO currentUser);
 
     /**
-     * 根据ID获取查询对象
+     * 根据主键查询${table.comment}
      *
-     * @param id
+     * @param recordId
      * @return
-     * @throws Exception
      */
-    ${entity} get${entity}ByPk(Serializable id);
+    ${entity}Dto get${entity}ByPk(String recordId);
 
     /**
-     * 获取分页对象
+     * 分页查询${table.comment}
      *
      * @param ${cfg.entityObjectName}QueryParam
      * @return
-     * @throws Exception
      */
-    Page<TkdDto> getTkdPageList(TkdQueryParam tkdQueryParam);
-#end
+    Page<${entity}Dto> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam);
 
 }
 #end

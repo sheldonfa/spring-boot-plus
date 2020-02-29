@@ -457,12 +457,30 @@ public class CodeGenerator {
                 }
             });
         }
+        // 自定义DataService模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/dataService.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/Data" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+                }
+            });
+        }
         // 自定义serviceImpl模板
         if (generatorQueryVo) {
             focList.add(new FileOutConfig("/templates/serviceImpl.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/impl" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+        // 自定义DataServiceImpl模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/dataServiceImpl.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/Data" + tableInfo.getEntityName() + "ServiceImpl" + StringPool.DOT_JAVA;
                 }
             });
         }
