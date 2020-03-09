@@ -31,17 +31,10 @@ import java.io.Serializable;
 @Slf4j
 @Service
 @Transactional
-#if(${kotlin})
-open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
-
-}
-#else
-public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName}, ${entity}> implements ${table.serviceName} {
+public class ${table.serviceImplName} implements ${table.serviceName} {
 
     @Autowired
     private ${table.mapperName} ${cfg.mapperObjectName};
-#if(${cfg.generatorStrategy} != 'SIMPLE')
-#if(${cfg.generatorStrategy} == 'ALL')
 
     @Override
     public boolean save${entity}(${entity} ${cfg.entityObjectName}) throws Exception {
@@ -96,7 +89,6 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     public boolean delete${entity}(Long id) throws Exception {
         return super.removeById(id);
     }
-#end
 
     @Override
     public ${entity} get${entity}ByPk(Serializable id) throws Exception {
@@ -114,7 +106,5 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
         }
         return tkdPageWrapper.getData();
     }
-#end
 
 }
-#end

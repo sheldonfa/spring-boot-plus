@@ -2,3 +2,4 @@
     tkdService.addTkd
 3 adminController中的delete模块要修改，
 3 缺少 通用的BizService
+4 serviceImpl中的delete没有实现
