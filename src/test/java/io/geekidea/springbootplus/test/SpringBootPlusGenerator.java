@@ -32,17 +32,18 @@ public class SpringBootPlusGenerator {
                 /**
                  * 开发环境
                  */
-                .setUserName("xp_seagull")
-                .setPassword("eWJw5zUkXa3Gz1lR")
+                .setUserName("root")
+                .setPassword("root")
                 .setDriverName("com.mysql.jdbc.Driver")
-                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+//                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
                 /**
                  * 本地
                  */
-//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8" );
-                /**
-                 * yunzhe
-                 */
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+        /**
+         * yunzhe
+         */
 //                .setUserName("root")
 //                .setPassword("Abcd1234")
 //                .setDriverName("com.mysql.jdbc.Driver")
@@ -94,37 +95,24 @@ public class SpringBootPlusGenerator {
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
                 /**
-                 * seagull
-                */
-//                "banner",
-//                "entry",
-//                "leave_info",
-//                "order_log",
-//                "pay_order",
-//                "sign_secret",
-//                "article",
-//                "bulletin",
-//                "home"
-                "tkd",
-                "common_price"
-                /**
                  * xp-lark-goods
                 */
-//                "category",
-//                "purchase_limit",
-//                "sku",
-//                "sku_spec",
-//                "sku_spec_value",
 //                "spu",
+//                "spu_snapshot",
 //                "spu_detail",
-//                "spu_version",
+//                "spu_detail_snapshot",
+//                "sku",
+//                "sku_history",
+//                "stock_record",
 //                "stock",
 //                "store",
-//                "sys_log",
-
-//                "tb_city",
-//                "tb_label",
-//                "tb_ul",
+//                "shelve_record"
+                /**
+                 * xp-lark-order
+                */
+                "order",
+                "order_item",
+                "order_record"
         };
 
         // 循环生成

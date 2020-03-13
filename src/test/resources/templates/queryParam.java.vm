@@ -21,10 +21,6 @@ import ${cfg.queryParamCommonPath};
  */
 @Data
 @Accessors(chain = true)
-@EqualsAndHashCode(callSuper = true)
-#if(${swagger2})
-@ApiModel(value = "${entity}QueryParam对象", description = "$!{table.comment}查询参数")
-#end
 #if(${cfg.pageListOrder})
 public class ${entity}QueryParam extends OrderQueryParam {
 #else

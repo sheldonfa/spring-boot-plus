@@ -29,11 +29,6 @@ import javax.validation.constraints.NotNull;
 #if(${entityLombokModel})
 @Data
 @Accessors(chain = true)
-#if(${superEntityClass})
-@EqualsAndHashCode(callSuper = true)
-#else
-@EqualsAndHashCode(callSuper = false)
-#end
 #end
 #if(${table.convert})
 @TableName("${table.name}")
