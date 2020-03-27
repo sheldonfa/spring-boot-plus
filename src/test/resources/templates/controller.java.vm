@@ -61,24 +61,18 @@ public class ${table.controllerName} {
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}CreateParam param) {
+    public ResponseEntity<ResponseWrapper<${cfg.entityObjectName}AddVo}>> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}CreateParam param) {
         boolean flag = ${cfg.serviceObjectName}.save(param);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
+        return ResultUtil.success(${entity}Convertor.to${entity}AddVo(flag));
     }
 
     /**
      * 修改$!{table.comment}
      */
     @PostMapping("/update")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:update")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
-#end
-    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}UpdateParam param) {
+    public ResponseEntity<ResponseWrapper<CategoryUpdateVo>> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}UpdateParam param) {
         boolean flag = ${cfg.serviceObjectName}.updateByPk(param);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
+        return ResultUtil.success(${entity}Convertor.to${entity}UpdateVo(flag));
     }
 
     /**
@@ -86,7 +80,7 @@ public class ${table.controllerName} {
      */
     @DeleteMapping("/delete/{pk}")
     public ResponseWrapper<Boolean> delete${entity}(@PathVariable("pk") String pk) {
-        boolean flag = ${cfg.serviceObjectName}.removeByPk(pk);
+        boolean flag = ${cfg.serviceObjectName}.removeById(pk);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
 

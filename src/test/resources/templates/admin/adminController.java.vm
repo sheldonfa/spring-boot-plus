@@ -48,17 +48,15 @@ class ${table.controllerName}
 public class Admin${table.controllerName} {
 
     @Autowired
-    private ${table.serviceName} ${cfg.entityObjectName}Service;
+    private Admin${table.serviceName} ${cfg.entityObjectName}Service;
 
 #if(${cfg.generatorStrategy} != 'SIMPLE')
     /**
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam param,
-            HttpServletRequest request,
-            HttpServletResponse response) {
-        AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
+    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam param) {
+        AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(getRequest(), getResponse());
         Boolean flag = ${cfg.entityObjectName}Service.add${entity}(Admin${entity}Convertor.to${entity}Dto(param), currentUser);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
     }
