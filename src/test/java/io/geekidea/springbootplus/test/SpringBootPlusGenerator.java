@@ -32,15 +32,17 @@ public class SpringBootPlusGenerator {
                 /**
                  * 开发环境
                  */
-                .setUserName("root")
-                .setPassword("root")
+//                .setUserName("xp_seagull")
+//                .setPassword("eWJw5zUkXa3Gz1lR")
                 .setDriverName("com.mysql.jdbc.Driver")
 //                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
                 /**
                  * 本地
                  */
-//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                .setUserName("root")
+                .setPassword("root")
+                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
         /**
          * yunzhe
          */
@@ -94,25 +96,7 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                /**
-                 * xp-lark-goods
-                */
-//                "spu",
-//                "spu_snapshot",
-//                "spu_detail",
-//                "spu_detail_snapshot",
-//                "sku",
-//                "sku_history",
-//                "stock_record",
-//                "stock",
-//                "store",
-//                "shelve_record"
-                /**
-                 * xp-lark-order
-                */
-                "order",
-                "order_item",
-                "order_record"
+              "category"
         };
 
         // 循环生成

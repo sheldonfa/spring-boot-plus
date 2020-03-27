@@ -41,7 +41,7 @@ import ${cfg.idParamPath};
 @RestController
 @RequestMapping("${cfg.adminRequestMapPrefix}${cfg.entityObjectName}")
 #if(${kotlin})
-class ${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
+class ${table.controllerName}
 
 #else
 

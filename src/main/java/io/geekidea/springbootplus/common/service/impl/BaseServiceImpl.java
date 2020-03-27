@@ -18,15 +18,16 @@ package io.geekidea.springbootplus.common.service.impl;
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.core.toolkit.CollectionUtils;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import io.geekidea.springbootplus.common.param.OrderQueryParam;
 import io.geekidea.springbootplus.common.param.QueryParam;
 import io.geekidea.springbootplus.common.service.BaseService;
-import org.apache.commons.collections.CollectionUtils;
 
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * @author geekidea
@@ -34,12 +35,12 @@ import java.util.List;
  */
 public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends ServiceImpl<M, T> implements BaseService<T> {
 
-    protected Page setPageParam(QueryParam queryParam) {
+    protected Page<T> setPageParam(QueryParam queryParam) {
         return setPageParam(queryParam, null);
     }
 
     protected Page<T> setPageParam(QueryParam queryParam, OrderItem defaultOrder) {
-        Page page = new Page();
+        Page<T> page = new Page<>();
         // 设置当前页码
         page.setCurrent(queryParam.getCurrent());
         // 设置页大小
@@ -51,13 +52,13 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends Servic
         if (queryParam instanceof OrderQueryParam) {
             OrderQueryParam orderQueryParam = (OrderQueryParam) queryParam;
             List<OrderItem> orderItems = orderQueryParam.getOrders();
-            if (CollectionUtils.isEmpty(orderItems)) {
-                page.setOrders(Arrays.asList(defaultOrder));
+            if (CollectionUtils.isEmpty(orderItems) && Objects.nonNull(defaultOrder)) {
+                page.setOrders(Collections.singletonList(defaultOrder));
             } else {
                 page.setOrders(orderItems);
             }
         } else {
-            page.setOrders(Arrays.asList(defaultOrder));
+            page.setOrders(Collections.singletonList(defaultOrder));
         }
 
         return page;

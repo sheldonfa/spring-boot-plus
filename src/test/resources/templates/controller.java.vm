@@ -45,18 +45,13 @@ import ${cfg.idParamPath};
 @Controller
 #end
 @RequestMapping("${cfg.requestMapPrefix}${cfg.entityObjectName}")
-#if(${swagger2})
-@Api("$!{table.comment} API")
-#end
 #if(${kotlin})
 class Data${table.controllerName}#if(${superControllerClass}) : ${superControllerClass}()#end
 
 #else
-#if(${superControllerClass})
-public class ${table.controllerName} extends ${superControllerClass} {
-#else
+
+
 public class ${table.controllerName} {
-#end
 
     @Autowired
     private ${table.serviceName} ${cfg.serviceObjectName};
@@ -66,19 +61,8 @@ public class ${table.controllerName} {
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:add")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "添加${entity}对象", notes = "添加$!{table.comment}", response = ResponseWrapper.class)
-#end
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) {
-        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, false);
-#if(${cfg.generatorStrategy} == 'ALL')
-        boolean flag = ${cfg.serviceObjectName}.save${entity}(${cfg.entityObjectName});
-#else
-        boolean flag = ${cfg.serviceObjectName}.save(${cfg.entityObjectName});
-#end
+    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}CreateParam param) {
+        boolean flag = ${cfg.serviceObjectName}.save(param);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
 
@@ -92,47 +76,26 @@ public class ${table.controllerName} {
 #if(${swagger2})
     @ApiOperation(value = "修改${entity}对象", notes = "修改$!{table.comment}", response = ResponseWrapper.class)
 #end
-    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto) {
-        ${entity} ${cfg.entityObjectName} = ${entity}Convert.to${entity}(${cfg.entityObjectName}Dto, true);
-#if(${cfg.generatorStrategy} == 'ALL')
-        boolean flag = ${cfg.serviceObjectName}.update${entity}(${cfg.entityObjectName});
-#else
-        boolean flag = ${cfg.serviceObjectName}.updateByPk(${cfg.entityObjectName});
-#end
+    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}UpdateParam param) {
+        boolean flag = ${cfg.serviceObjectName}.updateByPk(param);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
 
     /**
      * 删除$!{table.comment}
      */
-    @DeleteMapping("/delete/{recordId}")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:delete")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "删除${entity}对象", notes = "删除$!{table.comment}", response = ResponseWrapper.class)
-#end
-    public ResponseWrapper<Boolean> delete${entity}(@PathVariable("recordId") String recordId) {
-#if(${cfg.generatorStrategy} == 'ALL')
-        boolean flag = ${cfg.serviceObjectName}.delete${entity}(id);
-#else
-        boolean flag = ${cfg.serviceObjectName}.removeByPk(id);
-#end
+    @DeleteMapping("/delete/{pk}")
+    public ResponseWrapper<Boolean> delete${entity}(@PathVariable("pk") String pk) {
+        boolean flag = ${cfg.serviceObjectName}.removeByPk(pk);
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
     }
 
     /**
      * 获取$!{table.comment}
      */
-    @GetMapping("/info/{recordId}")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:info")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "获取${entity}对象详情", notes = "查看$!{table.comment}", response = ${entity}QueryVo.class)
-#end
-    public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("recordId") String recordId) {
-        ${entity} ${cfg.entityObjectName} = ${cfg.serviceObjectName}.get${entity}ByPk(id);
+    @GetMapping("/info/{pk}")
+    public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("pk") String pk) {
+        ${entity} ${cfg.entityObjectName} = ${cfg.serviceObjectName}.get${entity}ByPk(pk);
         ${entity}Dto ${cfg.entityObjectName}Dto =  ${entity}Convert.to${entity}Dto(${cfg.entityObjectName});
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),${cfg.entityObjectName}Dto);
     }
@@ -141,12 +104,6 @@ public class ${table.controllerName} {
      * $!{table.comment}分页列表
      */
     @PostMapping("/pageList")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:page")
-#end
-#if(${swagger2})
-    @ApiOperation(value = "获取${entity}分页列表", notes = "$!{table.comment}分页列表", response = ${entity}QueryVo.class)
-#end
     public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
         IPage<${entity}> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         // new page

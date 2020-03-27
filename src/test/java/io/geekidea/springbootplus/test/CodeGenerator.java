@@ -383,22 +383,12 @@ public class CodeGenerator {
             });
         }
 
-        // 自定义queryParam模板
-        if (generatorQueryParam) {
-            focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-
-        // 自定义queryVo模板
+        // 自定义createParam模板
         if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
+            focList.add(new FileOutConfig("/templates/createParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "CreateParam" + StringPool.DOT_JAVA;
                 }
             });
         }
@@ -412,78 +402,110 @@ public class CodeGenerator {
                 }
             });
         }
-        // 自定义convert模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/convertor.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convert/Data" + tableInfo.getEntityName() + "Convert" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-        // 自定义feignClient模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/feignClient.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/feign/" + tableInfo.getEntityName() + "ControllerClient" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-        // 自定义adminController模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/adminController.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/admin/" + "Admin" + tableInfo.getEntityName() + "Controller" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-        // 自定义ControllerTest模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/controllerTest.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/test/" + tableInfo.getEntityName() + "ControllerTest" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-        // 自定义service模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/service.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-        // 自定义DataService模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/dataService.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/Data" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-        // 自定义serviceImpl模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/serviceImpl.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
-                }
-            });
-        }
-        // 自定义DataServiceImpl模板
-        if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/dataServiceImpl.java.vm") {
-                @Override
-                public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/Data" + tableInfo.getEntityName() + "ServiceImpl" + StringPool.DOT_JAVA;
-                }
-            });
-        }
+
+
+//        // 自定义queryParam模板
+//        if (generatorQueryParam) {
+//            focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//
+//        // 自定义queryVo模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//
+
+//        // 自定义convert模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/convertor.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convertor/Data" + tableInfo.getEntityName() + "Convertor" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义feignClient模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/feignClient.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/feign/" + tableInfo.getEntityName() + "ControllerClient" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义adminController模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/adminController.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/admin/" + "Admin" + tableInfo.getEntityName() + "Controller" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义DataController模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/dataController.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/data/" + "Data" + tableInfo.getEntityName() + "Controller" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义ControllerTest模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/controllerTest.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/test/" + tableInfo.getEntityName() + "ControllerTest" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义service模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/service.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义DataService模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/dataService.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/Data" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义serviceImpl模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/serviceImpl.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/" + tableInfo.getEntityName() + "Service" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
+//        // 自定义DataServiceImpl模板
+//        if (generatorQueryVo) {
+//            focList.add(new FileOutConfig("/templates/dataServiceImpl.java.vm") {
+//                @Override
+//                public String outputFile(TableInfo tableInfo) {
+//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/service/Data" + tableInfo.getEntityName() + "ServiceImpl" + StringPool.DOT_JAVA;
+//                }
+//            });
+//        }
 
 
         cfg.setFileOutConfigList(focList);

@@ -20,50 +20,55 @@ import java.io.Serializable;
 #if(${kotlin})
 interface ${table.serviceName} : ${superServiceClass}<${entity}>
 #else
-public interface ${table.serviceName} {
+public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
+#if(${cfg.generatorStrategy} != 'SIMPLE')
 
     /**
-     * 添加$!{table.comment}
+     * 保存
      *
-     * @param ${cfg.entityObjectName}Dto
-     * @param currentUser    当前用户
-     * @return 是否成功
-     */
-    Boolean add${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
-
-    /**
-     * 修改$!{table.comment}
-     *
-     * @param ${cfg.entityObjectName}Dto
-     * @param currentUser    当前用户
-     * @return 是否成功
-     */
-    Boolean update${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
-
-    /**
-     * 删除${table.comment}
-     *
-     * @param recordId
-     * @param currentUser    当前用户
+     * @param ${cfg.entityObjectName}
      * @return
+     * @throws Exception
      */
-    Boolean delete${entity}ByPk(String recordId, AdminDTO currentUser);
+    boolean save${entity}(${entity} ${cfg.entityObjectName});
 
     /**
-     * 根据主键查询${table.comment}
+     * 修改
      *
-     * @param recordId
+     * @param ${cfg.entityObjectName}
      * @return
+     * @throws Exception
      */
-    ${entity}Dto get${entity}ByPk(String recordId);
+    boolean update${entity}(${entity} ${cfg.entityObjectName});
 
     /**
-     * 分页查询${table.comment}
+     * 删除
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    boolean delete${entity}(Long id) throws Exception;
+
+
+    /**
+     * 根据ID获取查询对象
+     *
+     * @param id
+     * @return
+     * @throws Exception
+     */
+    ${entity} get${entity}ByPk(Serializable id);
+
+    /**
+     * 获取分页对象
      *
      * @param ${cfg.entityObjectName}QueryParam
      * @return
+     * @throws Exception
      */
-    Page<${entity}Dto> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+        IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+#end
 
 }
 #end

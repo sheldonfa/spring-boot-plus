@@ -1,0 +1,69 @@
+package ${package.Service};
+
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+import ${cfg.queryParamPath};
+import ${cfg.queryVoPath};
+import ${cfg.paging};
+
+import java.io.Serializable;
+
+/**
+ * <pre>
+ * $!{table.comment} 服务类
+ * </pre>
+ *
+ * @author ${author}
+ * @since ${date}
+ */
+#if(${kotlin})
+interface ${table.serviceName} : ${superServiceClass}<${entity}>
+#else
+public interface ${table.serviceName} {
+
+    /**
+     * 添加$!{table.comment}
+     *
+     * @param ${cfg.entityObjectName}Dto
+     * @param currentUser    当前用户
+     * @return 是否成功
+     */
+    Boolean add${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
+
+    /**
+     * 修改$!{table.comment}
+     *
+     * @param ${cfg.entityObjectName}Dto
+     * @param currentUser    当前用户
+     * @return 是否成功
+     */
+    Boolean update${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
+
+    /**
+     * 删除${table.comment}
+     *
+     * @param recordId
+     * @param currentUser    当前用户
+     * @return
+     */
+    Boolean delete${entity}ByPk(String recordId, AdminDTO currentUser);
+
+    /**
+     * 根据主键查询${table.comment}
+     *
+     * @param recordId
+     * @return
+     */
+    ${entity}Dto get${entity}ByPk(String recordId);
+
+    /**
+     * 分页查询${table.comment}
+     *
+     * @param ${cfg.entityObjectName}QueryParam
+     * @return
+     */
+    Page<${entity}Dto> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+
+}
+#end
