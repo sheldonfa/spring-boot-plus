@@ -34,7 +34,7 @@ import java.io.Serializable;
 public class Admin${table.serviceImplName} implements Admin${table.serviceName} {
 
     @Override
-    public boolean save${entity}(${entity} ${cfg.entityObjectName}) throws Exception {
+    public boolean save${entity}(${entity} ${cfg.entityObjectName}) {
         ResponseWrapper<Boolean> flag;
         // 添加操作人邮箱、id、名称
         tkdDto.setOperateId(currentUser.getUid());
@@ -62,7 +62,7 @@ public class Admin${table.serviceImplName} implements Admin${table.serviceName} 
     }
 
     @Override
-    public boolean update${entity}(${entity} ${cfg.entityObjectName}) throws Exception {
+    public boolean update${entity}(${entity} ${cfg.entityObjectName}) {
         ResponseWrapper<Boolean> flag;
         // 添加操作人邮箱、id、名称
         tkdDto.setOperateId(currentUser.getUid());
@@ -83,17 +83,17 @@ public class Admin${table.serviceImplName} implements Admin${table.serviceName} 
     }
 
     @Override
-    public boolean delete${entity}(Long id) throws Exception {
+    public boolean delete${entity}(Long id) {
         return super.removeById(id);
     }
 
     @Override
-    public ${entity} get${entity}ByPk(Serializable id) throws Exception {
+    public ${entity} get${entity}ByPk(Serializable id) {
         return getById(id);
     }
 
     @Override
-    public IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception {
+    public IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
         ResponseWrapper<Page<TkdDto>> tkdPageWrapper;
         try {
         tkdPageWrapper = seagullDataServiceClient.getTkdPageList(tkdQueryParam);

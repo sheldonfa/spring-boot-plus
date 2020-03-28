@@ -48,7 +48,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-    boolean delete${entity}(Long id) throws Exception;
+    boolean delete${entity}(Long id);
 
 
     /**
@@ -67,7 +67,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * @return
      * @throws Exception
      */
-        IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) throws Exception;
+        IPage<${entity}> pageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam);
 #end
 
 }

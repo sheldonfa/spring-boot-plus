@@ -68,7 +68,7 @@ public class Data${table.serviceImplName} extends BaseServiceImpl<${table.mapper
     }
 
     @Override
-    public IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
+    public IPage<${entity}> pageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
         Page<${entity}> page = setPageParam(${cfg.entityObjectName}QueryParam);
         LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.<${entity}>lambdaQuery().orderByDesc(${entity}::getCreateTime);
         if (CommonUtils.notEmpty(${entity}QueryParam.get条件())) {

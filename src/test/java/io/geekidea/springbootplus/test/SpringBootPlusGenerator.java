@@ -96,7 +96,8 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-              "category"
+                "category",
+                "spu"
         };
 
         // 循环生成
