@@ -430,6 +430,16 @@ public class CodeGenerator {
             });
         }
 
+        // 自定义feignClient模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/feignClient.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/feign/" + tableInfo.getEntityName() + "ControllerClient" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
 
 //        // 自定义queryParam模板
 //        if (generatorQueryParam) {
@@ -461,15 +471,7 @@ public class CodeGenerator {
 //                }
 //            });
 //        }
-//        // 自定义feignClient模板
-//        if (generatorQueryVo) {
-//            focList.add(new FileOutConfig("/templates/feignClient.java.vm") {
-//                @Override
-//                public String outputFile(TableInfo tableInfo) {
-//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/feign/" + tableInfo.getEntityName() + "ControllerClient" + StringPool.DOT_JAVA;
-//                }
-//            });
-//        }
+
 //
 //        // 自定义DataController模板
 //        if (generatorQueryVo) {
