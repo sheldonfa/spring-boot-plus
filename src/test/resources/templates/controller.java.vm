@@ -61,7 +61,7 @@ public class ${table.controllerName} {
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
-    public ResponseEntity<ResponseWrapper<${cfg.entityObjectName}AddVo}>> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}CreateParam param) {
+    public ResponseEntity<ResponseWrapper<${cfg.entityObjectName}AddVo>> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}CreateParam param) {
         boolean flag = ${cfg.serviceObjectName}.save(param);
         return ResultUtil.success(${entity}Convertor.to${entity}AddVo(flag));
     }

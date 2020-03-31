@@ -41,7 +41,8 @@ public class SpringBootPlusGenerator {
                  */
                 .setUserName("root")
                 .setPassword("root")
-                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
         /**
          * yunzhe
@@ -96,8 +97,16 @@ public class SpringBootPlusGenerator {
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
-                "category",
-                "spu"
+                // goods
+//                "category",
+//                "spu"
+
+                // trade
+                "buyer_info",
+                "pay_info",
+                "pre_pay_order",
+                "pre_trade",
+                "trade"
         };
 
         // 循环生成
