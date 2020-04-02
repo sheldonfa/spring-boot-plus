@@ -383,12 +383,22 @@ public class CodeGenerator {
             });
         }
 
-        // 自定义createParam模板
+        // 自定义addParam模板
         if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/createParam.java.vm") {
+            focList.add(new FileOutConfig("/templates/addParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "CreateParam" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "AddParam" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
+        // 自定义addVo模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/addVo.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "AddVo" + StringPool.DOT_JAVA;
                 }
             });
         }

@@ -1,0 +1,36 @@
+package ${cfg.dtoPackage};
+
+#if(${swagger2})
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+#end
+#if(${entityLombokModel})
+import org.hibernate.validator.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import com.baomidou.mybatisplus.annotation.FieldFill;
+import com.baomidou.mybatisplus.annotation.TableField;
+import com.baomidou.mybatisplus.annotation.TableLogic;
+import lombok.Data;
+import lombok.experimental.Accessors;
+#end
+import java.io.Serializable;
+import java.util.Date;
+
+/**
+ * <pre>
+ * $!{table.comment} 查询结果对象
+ * </pre>
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+#if(${entityLombokModel})
+@Data
+@Accessors(chain = true)
+#end
+public class ${entity}AddParam implements Serializable {
+    /**
+     * 是否添加成功
+     */
+    private Boolean added;
+}

@@ -29,8 +29,7 @@ import java.util.Date;
 @Accessors(chain = true)
 #end
 
-public class ${entity}CreateParam implements Serializable {
-    private static final long serialVersionUID = 1L;
+public class ${entity}AddParam implements Serializable {
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 #if(!${field.keyIdentityFlag})

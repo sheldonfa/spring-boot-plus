@@ -30,7 +30,6 @@ import java.io.Serializable;
  */
 @Slf4j
 @Service
-@Transactional
 #if(${kotlin})
 open class ${table.serviceImplName} : ${superServiceImplClass}<${table.mapperName}, ${entity}>(), ${table.serviceName} {
 
@@ -40,27 +39,25 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 
     @Autowired
     private ${table.mapperName} ${cfg.mapperObjectName};
-#if(${cfg.generatorStrategy} != 'SIMPLE')
-#if(${cfg.generatorStrategy} == 'ALL')
 
     @Transactional(rollbackFor = Exception.class)
-        @Override
-        public boolean save${entity}(${entity} ${cfg.entityObjectName}) {
-        return super.save(${cfg.entityObjectName});
-        }
+    @Override
+    public boolean save${entity}(${entity}CreateParam param) {
+        ${entity} ${cfg.entityObjectName} = ${entity}Convertor.to${entity}(param)
+        return save(${cfg.entityObjectName});
+    }
 
-        @Transactional(rollbackFor = Exception.class)
-        @Override
-        public boolean update${entity}(${entity} ${cfg.entityObjectName}) {
-        return super.updateById(${cfg.entityObjectName});
-        }
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean update${entity}(${entity} ${cfg.entityObjectName}) {
+    return super.updateById(${cfg.entityObjectName});
+    }
 
-        @Transactional(rollbackFor = Exception.class)
-        @Override
-        public boolean delete${entity}(Long id) {
-        return super.removeById(id);
-        }
-#end
+    @Transactional(rollbackFor = Exception.class)
+    @Override
+    public boolean delete${entity}(Long id) {
+    return super.removeById(id);
+    }
 
     @Override
     public ${entity} get${entity}ByPk(Serializable id) {
@@ -76,7 +73,6 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
         }
         return page(page, queryWrapper);
     }
-#end
 
 }
 #end
