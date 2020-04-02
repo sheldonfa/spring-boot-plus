@@ -58,7 +58,7 @@ public abstract class BaseServiceImpl<M extends BaseMapper<T>, T> extends Servic
                 page.setOrders(orderItems);
             }
         } else {
-            page.setOrders(Collections.singletonList(defaultOrder));
+            page.setOrders(null);
         }
 
         return page;
