@@ -441,16 +441,26 @@ public class CodeGenerator {
         }
 
 
-//        // 自定义queryParam模板
-//        if (generatorQueryParam) {
-//            focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
-//                @Override
-//                public String outputFile(TableInfo tableInfo) {
-//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
-//                }
-//            });
-//        }
-//
+        // 自定义queryParam模板
+        if (generatorQueryParam) {
+            focList.add(new FileOutConfig("/templates/queryParam.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "QueryParam" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
+        // 自定义convert模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/convertor.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convertor/" + tableInfo.getEntityName() + "Convertor" + StringPool.DOT_JAVA;
+                }
+            });
+        }
+
 //        // 自定义queryVo模板
 //        if (generatorQueryVo) {
 //            focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
@@ -462,15 +472,7 @@ public class CodeGenerator {
 //        }
 //
 
-//        // 自定义convert模板
-//        if (generatorQueryVo) {
-//            focList.add(new FileOutConfig("/templates/convertor.java.vm") {
-//                @Override
-//                public String outputFile(TableInfo tableInfo) {
-//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convertor/Data" + tableInfo.getEntityName() + "Convertor" + StringPool.DOT_JAVA;
-//                }
-//            });
-//        }
+
 
 //
 //        // 自定义DataController模板

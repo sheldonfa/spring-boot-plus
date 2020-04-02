@@ -44,22 +44,22 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 #if(${cfg.generatorStrategy} == 'ALL')
 
     @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean save${entity}(${entity} ${cfg.entityObjectName}) {
+        @Override
+        public boolean save${entity}(${entity} ${cfg.entityObjectName}) {
         return super.save(${cfg.entityObjectName});
-    }
+        }
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean update${entity}(${entity} ${cfg.entityObjectName}) {
+        @Transactional(rollbackFor = Exception.class)
+        @Override
+        public boolean update${entity}(${entity} ${cfg.entityObjectName}) {
         return super.updateById(${cfg.entityObjectName});
-    }
+        }
 
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean delete${entity}(Long id) {
+        @Transactional(rollbackFor = Exception.class)
+        @Override
+        public boolean delete${entity}(Long id) {
         return super.removeById(id);
-    }
+        }
 #end
 
     @Override

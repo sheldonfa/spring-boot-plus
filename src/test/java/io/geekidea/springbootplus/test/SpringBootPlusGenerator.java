@@ -32,17 +32,17 @@ public class SpringBootPlusGenerator {
                 /**
                  * 开发环境
                  */
-//                .setUserName("xp_seagull")
-//                .setPassword("eWJw5zUkXa3Gz1lR")
+                .setUserName("xp_seagull")
+                .setPassword("eWJw5zUkXa3Gz1lR")
                 .setDriverName("com.mysql.jdbc.Driver")
-//                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
                 /**
                  * 本地
                  */
-                .setUserName("root")
-                .setPassword("root")
+//                .setUserName("root")
+//                .setPassword("root")
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
         /**
          * yunzhe
@@ -67,7 +67,7 @@ public class SpringBootPlusGenerator {
         // 生成策略
         codeGenerator
                 .setGeneratorStrategy(CodeGenerator.GeneratorStrategy.NORMAL)
-                .setPageListOrder(true)
+                .setPageListOrder(false)
                 .setParamValidation(true);
 
         // 生成实体映射相关代码,可用于数据库字段更新
@@ -102,11 +102,14 @@ public class SpringBootPlusGenerator {
 //                "spu"
 
                 // trade
-                "buyer_info",
-                "pay_info",
-                "pre_pay_order",
-                "pre_trade",
-                "trade"
+//                "buyer_info",
+//                "pay_info",
+//                "pre_pay_order",
+//                "pre_trade",
+//                "trade"
+
+                // seagull
+                "message_record"
         };
 
         // 循环生成

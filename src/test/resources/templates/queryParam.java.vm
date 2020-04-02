@@ -26,5 +26,4 @@ public class ${entity}QueryParam extends OrderQueryParam {
 #else
 public class ${entity}QueryParam extends QueryParam {
 #end
-    private static final long serialVersionUID = 1L;
 }
