@@ -27,19 +27,17 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
      * 保存
      *
      * @param ${cfg.entityObjectName}
-     * @return
-     * @throws Exception
+     * @return true or false
      */
-    boolean save${entity}(${entity} ${cfg.entityObjectName});
+    boolean save${entity}(${entity}AddParam param);
 
     /**
      * 修改
      *
      * @param ${cfg.entityObjectName}
-     * @return
-     * @throws Exception
+     * @return true or false
      */
-    boolean update${entity}(${entity} ${cfg.entityObjectName});
+    boolean update${entity}(${entity}UpdateParam param);
 
     /**
      * 删除
