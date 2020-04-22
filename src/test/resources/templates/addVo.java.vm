@@ -28,7 +28,7 @@ import java.util.Date;
 @Data
 @Accessors(chain = true)
 #end
-public class ${entity}AddParam implements Serializable {
+public class ${entity}AddVo implements Serializable {
     /**
      * 是否添加成功
      */

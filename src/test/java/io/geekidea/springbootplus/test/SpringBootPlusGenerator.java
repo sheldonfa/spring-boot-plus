@@ -109,7 +109,9 @@ public class SpringBootPlusGenerator {
 //                "trade"
 
                 // seagull
-                "message_record"
+//                "message_record",
+//                "common_price"
+                "extra_right"
         };
 
         // 循环生成
