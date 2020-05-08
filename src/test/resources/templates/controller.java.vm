@@ -97,13 +97,23 @@ public class ${table.controllerName} {
     /**
      * $!{table.comment}分页列表
      */
-    @PostMapping("/pageList")
-    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
-        IPage<${entity}> paging = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
+    @PostMapping("/list")
+    public ResponseWrapper<List<${entity}QueryVo>> get${entity}List(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam queryParam) {
+        List<${entity}> list = ${cfg.entityObjectName}Service.list(queryParam);
         // new page
-        Page<${entity}Dto> page = new Page<>();
+        return ResultUtil.success(${entity}Convertor.to${entity}QueryVoList(list));
+    }
+
+    /**
+     * $!{table.comment}分页列表
+     */
+    @PostMapping("/pageList")
+    public ResponseWrapper<Page<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam queryParam) {
+        IPage<${entity}> paging = ${cfg.entityObjectName}Service.pageList(queryParam);
+        // new page
+        Page<${entity}QueryVo> page = new Page<>();
         page.setTotal(paging.getTotal());
-        page.setRecords(${entity}Convert.to${entity}DtoList(paging.getRecords()));
+        page.setRecords(${entity}Convertor.to${entity}QueryVoList(paging.getRecords()));
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),page);
     }
 #end

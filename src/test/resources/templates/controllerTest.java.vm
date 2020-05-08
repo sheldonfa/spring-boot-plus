@@ -61,9 +61,9 @@ public class ${table.controllerName}Test extends BaseTest {
                 .content(JSON.toJSONString(dto))
                 .accept(MediaType.APPLICATION_JSON_UTF8))
                 .andExpect(status().isOk()).andReturn().getResponse().getContentAsString();
-        Boolean response = TestUtil.parseObj(contentAsString, Boolean.class);
+        Boolean response = TestUtil.parseObj(contentAsString, ${entity}AddVo.class);
         // assert
-        assertThat(response, is(true));
+        assertThat(response.getAdded(), is(true));
         Page<${entity}Dto> query = pageList();
         assertThat(query.getRecords().size(), is(2));
     }

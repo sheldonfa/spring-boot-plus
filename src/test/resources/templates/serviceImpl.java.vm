@@ -42,15 +42,16 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean save${entity}(${entity}CreateParam param) {
-        ${entity} ${cfg.entityObjectName} = ${entity}Convertor.to${entity}(param)
+    public boolean save${entity}(${entity}AddParam param) {
+        ${entity} ${cfg.entityObjectName} = ${entity}Convertor.to${entity}(param);
         return save(${cfg.entityObjectName});
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
-    public boolean update${entity}(${entity} ${cfg.entityObjectName}) {
-    return super.updateById(${cfg.entityObjectName});
+    public boolean update${entity}(${entity}UpdateParam param) {
+        ${entity} ${cfg.entityObjectName} = ${entity}Convertor.to${entity}(param);
+        return updateById(${cfg.entityObjectName});
     }
 
     @Transactional(rollbackFor = Exception.class)

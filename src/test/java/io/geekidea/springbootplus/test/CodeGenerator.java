@@ -481,17 +481,15 @@ public class CodeGenerator {
             });
         }
 
-//        // 自定义queryVo模板
-//        if (generatorQueryVo) {
-//            focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
-//                @Override
-//                public String outputFile(TableInfo tableInfo) {
-//                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
-//                }
-//            });
-//        }
-//
-
+        // 自定义queryVo模板
+        if (generatorQueryVo) {
+            focList.add(new FileOutConfig("/templates/queryVo.java.vm") {
+                @Override
+                public String outputFile(TableInfo tableInfo) {
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/vo/" + tableInfo.getEntityName() + "QueryVo" + StringPool.DOT_JAVA;
+                }
+            });
+        }
 
 
 //

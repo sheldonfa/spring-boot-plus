@@ -29,22 +29,7 @@ import java.util.stream.Collectors;
 
 public class ${entity}Convertor {
 
-    public static ${entity}Dto to${entity}Dto(${entity} entity) {
-            ${entity}Dto dto = new ${entity}Dto();
-        if (Objects.isNull(entity)) {
-            return null;
-        }
-        #foreach($field in ${table.fields})
-            #if(!${field.keyIdentityFlag})
-            ## ----------  BEGIN 字段循环遍历  ----------
-                dto.set${field.capitalName}(entity.get${field.capitalName}());
-            ## ----------  END 字段循环遍历  ----------
-            #end
-        #end
-        return dto;
-    }
-
-    public static ${entity} to${entity}(${entity}CreateParam dto) {
+    public static ${entity} to${entity}(${entity}AddParam dto) {
         ${entity} entity = new ${entity}();
         if (Objects.isNull(dto)) {
             return null;

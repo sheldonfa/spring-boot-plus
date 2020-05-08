@@ -8,6 +8,7 @@ import ${cfg.queryVoPath};
 import ${cfg.paging};
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * <pre>
@@ -26,7 +27,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 保存
      *
-     * @param ${cfg.entityObjectName}
+     * @param param
      * @return true or false
      */
     boolean save${entity}(${entity}AddParam param);
@@ -34,7 +35,7 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     /**
      * 修改
      *
-     * @param ${cfg.entityObjectName}
+     * @param param
      * @return true or false
      */
     boolean update${entity}(${entity}UpdateParam param);
@@ -59,13 +60,20 @@ public interface ${table.serviceName} extends ${superServiceClass}<${entity}> {
     ${entity} get${entity}ByPk(Serializable id);
 
     /**
+    * 获取列表对象
+    *
+    * @param queryParam
+    * @return
+    */
+    List<${entity}> list(${entity}QueryParam queryParam);
+
+    /**
      * 获取分页对象
      *
-     * @param ${cfg.entityObjectName}QueryParam
+     * @param queryParam 请求参数
      * @return
-     * @throws Exception
      */
-        IPage<${entity}> pageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+     IPage<${entity}> pageList(${entity}QueryParam queryParam);
 #end
 
 }

@@ -31,7 +31,6 @@ import java.util.Date;
 @ApiModel(value = "${entity}QueryVo对象", description = "$!{table.comment}查询参数")
 #end
 public class ${entity}QueryVo implements Serializable {
-    private static final long serialVersionUID = 1L;
 ## ----------  BEGIN 字段循环遍历  ----------
 #foreach($field in ${table.fields})
 
