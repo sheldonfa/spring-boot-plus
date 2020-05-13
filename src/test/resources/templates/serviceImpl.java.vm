@@ -43,14 +43,14 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean save${entity}(${entity}AddParam param) {
-        ${entity} ${cfg.entityObjectName} = ${entity}Convertor.to${entity}(param);
+        ${entity} ${cfg.entityObjectName} = ${entity}Converter.to${entity}(param);
         return save(${cfg.entityObjectName});
     }
 
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean update${entity}(${entity}UpdateParam param) {
-        ${entity} ${cfg.entityObjectName} = ${entity}Convertor.to${entity}(param);
+        ${entity} ${cfg.entityObjectName} = ${entity}Converter.to${entity}(param);
         return updateById(${cfg.entityObjectName});
     }
 
@@ -63,6 +63,15 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     @Override
     public ${entity} get${entity}ByPk(Serializable id) {
         return getById(id);
+    }
+
+    @Override
+    public List<FinancialPlan> list(FinancialPlanQueryParamDto ${cfg.entityObjectName}QueryParam) {
+        LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.<${entity}>lambdaQuery().orderByDesc(${entity}::getCreateTime);
+        if (CommonUtils.notEmpty(${entity}QueryParam.get条件())) {
+            queryWrapper.eq(${entity}::get条件, ${cfg.entityObjectName}QueryParam.get条件());
+        }
+        return list(queryWrapper);
     }
 
     @Override

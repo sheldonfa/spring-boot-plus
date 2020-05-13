@@ -63,7 +63,7 @@ public class ${table.controllerName} {
     @PostMapping("/add")
     public ResponseEntity<ResponseWrapper<${entity}AddVo>> add${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}AddParam param) {
         boolean flag = ${cfg.serviceObjectName}.save${entity}(param);
-        return ResultUtil.success(${entity}Convertor.to${entity}AddVo(flag));
+        return ResultUtil.success(${entity}Converter.to${entity}AddVo(flag));
     }
 
     /**
@@ -72,7 +72,7 @@ public class ${table.controllerName} {
     @PostMapping("/update")
     public ResponseEntity<ResponseWrapper<CategoryUpdateVo>> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}UpdateParam param) {
         boolean flag = ${cfg.serviceObjectName}.updateByPk(param);
-        return ResultUtil.success(${entity}Convertor.to${entity}UpdateVo(flag));
+        return ResultUtil.success(${entity}Converter.to${entity}UpdateVo(flag));
     }
 
     /**
@@ -101,7 +101,7 @@ public class ${table.controllerName} {
     public ResponseWrapper<List<${entity}QueryVo>> get${entity}List(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam queryParam) {
         List<${entity}> list = ${cfg.entityObjectName}Service.list(queryParam);
         // new page
-        return ResultUtil.success(${entity}Convertor.to${entity}QueryVoList(list));
+        return ResultUtil.success(${entity}Converter.to${entity}QueryVoList(list));
     }
 
     /**
@@ -113,7 +113,7 @@ public class ${table.controllerName} {
         // new page
         Page<${entity}QueryVo> page = new Page<>();
         page.setTotal(paging.getTotal());
-        page.setRecords(${entity}Convertor.to${entity}QueryVoList(paging.getRecords()));
+        page.setRecords(${entity}Converter.to${entity}QueryVoList(paging.getRecords()));
         return ResponseWrapper.success(MessageCode.SUCCESS.code(),page);
     }
 #end

@@ -463,10 +463,10 @@ public class CodeGenerator {
 
         // 自定义convert模板
         if (generatorQueryVo) {
-            focList.add(new FileOutConfig("/templates/convertor.java.vm") {
+            focList.add(new FileOutConfig("/templates/converter.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/convertor/" + tableInfo.getEntityName() + "Convertor" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/converter/" + tableInfo.getEntityName() + "Converter" + StringPool.DOT_JAVA;
                 }
             });
         }

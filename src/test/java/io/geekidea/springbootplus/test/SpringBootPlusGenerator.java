@@ -32,19 +32,19 @@ public class SpringBootPlusGenerator {
                 /**
                  * 开发环境
                  */
-//                .setUserName("xp_seagull")
-//                .setPassword("eWJw5zUkXa3Gz1lR")
-//                .setDriverName("com.mysql.jdbc.Driver")
-//                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                .setUserName("xp_seagull")
+                .setPassword("eWJw5zUkXa3Gz1lR")
+                .setDriverName("com.mysql.jdbc.Driver")
+                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
                 /**
                  * 本地
                  */
-                .setUserName("root")
-                .setPassword("root")
-                .setDriverName("com.mysql.jdbc.Driver")
+//                .setUserName("root")
+//                .setPassword("root")
+//                .setDriverName("com.mysql.jdbc.Driver")
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
         /**
          * yunzhe
          */
@@ -116,8 +116,11 @@ public class SpringBootPlusGenerator {
 //                "pre_pay_order"
 
                 // order
-                "order_info",
-                "order_item"
+//                "order_info",
+//                "order_item",
+//                "order_record"
+                "financial_activity",
+                "financial_plan"
         };
 
         // 循环生成

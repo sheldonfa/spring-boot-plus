@@ -27,7 +27,7 @@ import java.util.stream.Collectors;
  * @date ${date}
  */
 
-public class ${entity}Convertor {
+public class ${entity}Converter {
 
     public static ${entity} to${entity}(${entity}AddParam dto) {
         ${entity} entity = new ${entity}();
