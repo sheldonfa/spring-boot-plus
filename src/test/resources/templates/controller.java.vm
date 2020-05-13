@@ -70,8 +70,8 @@ public class ${table.controllerName} {
      * 修改$!{table.comment}
      */
     @PostMapping("/update")
-    public ResponseEntity<ResponseWrapper<CategoryUpdateVo>> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}UpdateParam param) {
-        boolean flag = ${cfg.serviceObjectName}.updateByPk(param);
+    public ResponseEntity<ResponseWrapper<${entity}UpdateVo>> update${entity}(#if(${cfg.paramValidation})#end @RequestBody ${entity}UpdateParam param) {
+        boolean flag = ${cfg.serviceObjectName}.update${entity}(param);
         return ResultUtil.success(${entity}Converter.to${entity}UpdateVo(flag));
     }
 
@@ -79,42 +79,42 @@ public class ${table.controllerName} {
      * 删除$!{table.comment}
      */
     @DeleteMapping("/delete/{pk}")
-    public ResponseWrapper<Boolean> delete${entity}(@PathVariable("pk") String pk) {
+    public ResponseEntity<ResponseWrapper<Boolean>> delete${entity}(@PathVariable("pk") String pk) {
         boolean flag = ${cfg.serviceObjectName}.removeById(pk);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(),flag);
+        return ResultUtil.success(flag);
     }
 
     /**
      * 获取$!{table.comment}
      */
     @GetMapping("/info/{pk}")
-    public ResponseWrapper<${entity}Dto> get${entity}(@PathVariable("pk") String pk) {
+    public ResponseEntity<ResponseWrapper<${entity}QueryResultDto>> get${entity}(@PathVariable("pk") String pk) {
         ${entity} ${cfg.entityObjectName} = ${cfg.serviceObjectName}.get${entity}ByPk(pk);
-        ${entity}Dto ${cfg.entityObjectName}Dto =  ${entity}Convert.to${entity}Dto(${cfg.entityObjectName});
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(),${cfg.entityObjectName}Dto);
+        ${entity}QueryResultDto ${cfg.entityObjectName}QueryResultDto =  ${entity}Converter.to${entity}QueryResultDto(${cfg.entityObjectName});
+        return ResultUtil.success(${cfg.entityObjectName}QueryResultDto);
     }
 
     /**
-     * $!{table.comment}分页列表
+     * $!{table.comment}列表查询
      */
     @PostMapping("/list")
-    public ResponseWrapper<List<${entity}QueryVo>> get${entity}List(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam queryParam) {
+    public ResponseEntity<ResponseWrapper<${entity}QueryListVo>> get${entity}List(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam queryParam) {
         List<${entity}> list = ${cfg.entityObjectName}Service.list(queryParam);
         // new page
-        return ResultUtil.success(${entity}Converter.to${entity}QueryVoList(list));
+        return ResultUtil.success(${entity}Converter.to${entity}QueryListVo(list));
     }
 
     /**
-     * $!{table.comment}分页列表
+     * $!{table.comment}分页查询
      */
     @PostMapping("/pageList")
-    public ResponseWrapper<Page<${entity}QueryVo>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam queryParam) {
+    public ResponseEntity<ResponseWrapper<Page<${entity}QueryVo>>> get${entity}PageList(#if(${cfg.paramValidation})#end @RequestBody ${entity}QueryParam queryParam) {
         IPage<${entity}> paging = ${cfg.entityObjectName}Service.pageList(queryParam);
         // new page
         Page<${entity}QueryVo> page = new Page<>();
         page.setTotal(paging.getTotal());
         page.setRecords(${entity}Converter.to${entity}QueryVoList(paging.getRecords()));
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(),page);
+        return ResultUtil.success(page);
     }
 #end
 
