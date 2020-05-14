@@ -19,6 +19,7 @@ import lombok.extern.slf4j.Slf4j;
 import io.geekidea.springbootplus.common.constraints.MessageCode;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.core.metadata.IPage;
@@ -55,55 +56,54 @@ public class Admin${table.controllerName} {
      * 添加$!{table.comment}
      */
     @PostMapping("/add")
-    public ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam param) {
-        AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(getRequest(), getResponse());
-        Boolean flag = ${cfg.entityObjectName}Service.add${entity}(Admin${entity}Convertor.to${entity}Dto(param), currentUser);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
+    public ResponseEntity<ResponseWrapper<${entity}AddResultDto>> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam param,
+            HttpServletRequest request,
+            HttpServletResponse response) {
+        AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
+        ${entity}AddResultDto result = ${cfg.entityObjectName}Service.add${entity}(Admin${entity}Convertor.to${entity}Dto(param), currentUser);
+        return ResultUtil.success(result);
     }
 
     /**
      * 修改$!{table.comment}
      */
     @PostMapping("/update")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:update")
-#end
-    public ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}UpdateParam param,
+    public ResponseEntity<ResponseWrapper<Boolean>> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}UpdateParam param,
             HttpServletRequest request,
             HttpServletResponse response) {
         AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
-        Boolean flag = ${cfg.entityObjectName}Service.update${entity}(Admin${entity}Convertor.to${entity}Dto(param), currentUser);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
+        ${entity}UpdateResultDto result = ${cfg.entityObjectName}Service.update${entity}(Admin${entity}Convertor.to${entity}Dto(param), currentUser);
+        return ResultUtil.success(result);
     }
 
     /**
      * 删除$!{table.comment}
      */
     @PostMapping("/delete")
-    public ResponseWrapper<Boolean> delete${entity}(@RequestParam("recordId") String recordId,
+    public ResponseEntity<ResponseWrapper<Boolean>> delete${entity}(@RequestParam("recordId") String recordId,
                                                     HttpServletRequest request,
                                                     HttpServletResponse response) {
         AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
-        Boolean flag = ${cfg.entityObjectName}Service.delete${entity}ByPk(recordId, currentUser);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), flag);
+        ${entity}DeleteResultDto result = ${cfg.entityObjectName}Service.delete${entity}ByPk(recordId, currentUser);
+        return ResultUtil.success(result);
     }
 
     /**
      * 获取$!{table.comment}
      */
     @GetMapping("/info")
-    public ResponseWrapper<${entity}Dto> get${entity}(@RequestParam("recordId") String recordId) {
-            ${entity}Dto ${cfg.entityObjectName} = ${cfg.entityObjectName}Service.get${entity}ByPk(recordId);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), ${cfg.entityObjectName});
+    public ResponseEntity<ResponseWrapper<${entity}QueryResultDto>> get${entity}(@RequestParam("recordId") String recordId) {
+        ${entity}QueryResultDto result = ${cfg.entityObjectName}Service.get${entity}ByPk(recordId);
+        return ResultUtil.success(result);
     }
 
     /**
      * $!{table.comment}分页列表
      */
     @PostMapping("/pageList")
-    public ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
-        Page<${entity}Dto> page = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
-        return ResponseWrapper.success(MessageCode.SUCCESS.code(), page);
+    public ResponseWrapper<Page<${entity}QueryResultDto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
+        Page<${entity}QueryResultDto> page = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
+        return ResultUtil.success(page);
     }
 #end
 

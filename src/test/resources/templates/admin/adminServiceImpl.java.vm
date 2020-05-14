@@ -1,23 +1,26 @@
-package ${package.ServiceImpl};
-
-import ${package.Entity}.${entity};
-import ${package.Mapper}.${table.mapperName};
-import ${package.Service}.${table.serviceName};
-import ${cfg.queryParamPath};
-import ${cfg.queryVoPath};
-import ${superServiceImplClassPackage};
-import ${cfg.paging};
+package ${package.ServiceImpl}import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.beans.factory.annotation.Autowired;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
-import com.baomidou.mybatisplus.core.toolkit.Wrappers;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.core.metadata.OrderItem;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 
 import java.io.Serializable;
+
+;
+${package.Entity}
+        .${entity};
+    ${package.Mapper}
+        .${table.mapperName};
+    ${package.Service}
+        .${table.serviceName};
+    ${cfg.queryParamPath}
+        ;
+    ${cfg.queryVoPath}
+        ;
+    ${superServiceImplClassPackage}
+        ;
+    ${cfg.paging}
+        ;
 
 
 /**
@@ -34,51 +37,40 @@ import java.io.Serializable;
 public class Admin${table.serviceImplName} implements Admin${table.serviceName} {
 
     @Override
-    public boolean save${entity}(${entity} ${cfg.entityObjectName}) {
-        ResponseWrapper<Boolean> flag;
-        // 添加操作人邮箱、id、名称
-        tkdDto.setOperateId(currentUser.getUid());
-        tkdDto.setOperateName(currentUser.getUsername());
-        tkdDto.setOperateEmail(currentUser.getEmail());
-        ResponseWrapper<TkdDto> tkdDtoResponseWrapper;
-        try {
-        tkdDtoResponseWrapper = seagullDataServiceClient.getTkdByCode(tkdDto.getCode());
-        } catch (Exception e) {
-        Log.error("seagullDataServiceClient.getTkdByCode", e);
-        throw ExceptionUtil.dataServiceError("seagullDataServiceClient.getTkdByCode");
+    public ${entity}AddResultDto add${entity}(${entity} paramDto,AdminDTO currentUser) {
+        // step1 封装管理员信息 添加操作人邮箱、id、名称
+        paramDto.setOperateId(currentUser.getUid());
+        paramDto.setOperateName(currentUser.getUsername());
+        paramDto.setOperateEmail(currentUser.getEmail());
+        // step2 查询信息
+        ${cfg.entityObjectName}QueryParamDto query = new ${cfg.entityObjectName}QueryParamDto();
+        ResponseWrapper<${entity}QueryListResultDto> ${cfg.entityObjectName}QueryListResultDtoResponseWrapper = seagullDataServiceClient.get${entity}List(query);
+        // step3 重复性校验
+        if (Objects.nonNull(${cfg.entityObjectName}QueryListResultDtoResponseWrapper.getData())) {
+            // TODO 补充提示信息
+            throw ExceptionUtil.invalidParam(String.format());
         }
-        if (Objects.nonNull(tkdDtoResponseWrapper.getData())) {
-        throw ExceptionUtil.invalidParam(String.format("当前code的tkd已经存在，code=%s", tkdDtoResponseWrapper.getCode()));
-        }
-        try {
-        flag = seagullDataServiceClient.addTkd(tkdDto);
-        // 删除缓存
-        redisUtil.del(String.join(RedisConstant.SEPARATOR, RedisConstant.XP_SEAGULL_TKD, tkdDto.getCode()));
-        } catch (Exception e) {
-        Log.error("addTkd", e);
-        throw ExceptionUtil.dataServiceError("addTkd");
-        }
+        // step4 保存
+        ResponseWrapper<${entity}AddResultDto> wrapper = seagullDataServiceClient.addTkd(tkdDto);
+        // step5 删除缓存
+        // TODO 添加缓存key
+        redisUtil.del(String.join(RedisConstant.SEPARATOR, , ));
         return flag.getData();
     }
 
     @Override
-    public boolean update${entity}(${entity} ${cfg.entityObjectName}) {
+    public boolean update${entity}(${entity}UpdateParamDto paramDto,AdminDTO currentUser) {
         ResponseWrapper<Boolean> flag;
         // 添加操作人邮箱、id、名称
-        tkdDto.setOperateId(currentUser.getUid());
-        tkdDto.setOperateName(currentUser.getUsername());
-        tkdDto.setOperateEmail(currentUser.getEmail());
-        try {
-        flag = seagullDataServiceClient.deleteTkd(tkdDto.getRecordId());
+        paramDto.setOperateId(currentUser.getUid());
+        paramDto.setOperateName(currentUser.getUsername());
+        paramDto.setOperateEmail(currentUser.getEmail());
+        flag = seagullDataServiceClient.delete${entity}(paramDto.getRecordId());
         if (flag.getData()) {
-        seagullDataServiceClient.addTkd(tkdDto);
+            seagullDataServiceClient.add${entity}(paramDto);
         }
         // 删除缓存
-        redisUtil.del(String.join(RedisConstant.SEPARATOR, RedisConstant.XP_SEAGULL_TKD, tkdDto.getCode()));
-        } catch (Exception e) {
-        Log.error("updateTkd", e);
-        throw ExceptionUtil.dataServiceError("updateTkd");
-        }
+        redisUtil.del(String.join(RedisConstant.SEPARATOR, RedisConstant.XP_SEAGULL_XXX, ));
         return flag.getData();
     }
 

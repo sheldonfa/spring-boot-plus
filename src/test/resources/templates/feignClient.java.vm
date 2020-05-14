@@ -52,7 +52,7 @@ public interface  ${table.controllerName}Client {
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:add")
 #end
-    ResponseWrapper<Boolean> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto);
+    ResponseWrapper<${entity}AddVo> add${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}AddParam ${cfg.entityObjectName}Dto);
 
     /**
      * 修改$!{table.comment}
@@ -82,13 +82,16 @@ public interface  ${table.controllerName}Client {
     ResponseWrapper<${entity}Dto> get${entity}ByPk(@PathVariable("recordId") String recordId);
 
     /**
+     * $!{table.comment}列表
+     */
+    @PostMapping("/${cfg.colonTableName}/list")
+    ResponseWrapper<${entity}QueryListResultDto> get${entity}List(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+
+    /**
      * $!{table.comment}分页列表
      */
     @PostMapping("/${cfg.colonTableName}/pageList")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:page")
-#end
-    ResponseWrapper<Page<${entity}Dto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+    ResponseWrapper<Page<${entity}QueryResultDto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam);
 #end
 
 }

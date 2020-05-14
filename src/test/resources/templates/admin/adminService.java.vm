@@ -1,13 +1,14 @@
 package ${package.Service};
-
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import ${package.Entity}.${entity};
-import ${superServiceClassPackage};
-import ${cfg.queryParamPath};
-import ${cfg.queryVoPath};
-import ${cfg.paging};
-
-import java.io.Serializable;
+${package.Entity}
+        .${entity};
+    ${superServiceClassPackage}
+        ;
+    ${cfg.queryParamPath}
+        ;
+    ${cfg.queryVoPath}
+        ;
+    ${cfg.paging}
+        ;
 
 /**
  * <pre>
@@ -29,7 +30,7 @@ public interface Admin${table.serviceName} {
      * @param currentUser    当前用户
      * @return 是否成功
      */
-    Boolean add${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
+     ${entity}AddVo add${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
 
     /**
      * 修改$!{table.comment}
