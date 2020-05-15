@@ -61,7 +61,7 @@ public interface  ${table.controllerName}Client {
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:update")
 #end
-    ResponseWrapper<Boolean> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto);
+    ResponseWrapper<${entity}UpdateVo> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}Dto ${cfg.entityObjectName}Dto);
 
     /**
      * 删除$!{table.comment}
@@ -70,16 +70,13 @@ public interface  ${table.controllerName}Client {
 #if(${cfg.requiresPermissions})
     @RequiresPermissions("$!{cfg.colonTableName}:delete")
 #end
-    ResponseWrapper<Boolean> delete${entity}(@PathVariable("recordId") String recordId);
+    ResponseWrapper<${entity}DeleteVo> delete${entity}(@PathVariable("recordId") String recordId);
 
     /**
      * 获取$!{table.comment}
      */
     @GetMapping("/${cfg.colonTableName}/info/{recordId}")
-#if(${cfg.requiresPermissions})
-    @RequiresPermissions("$!{cfg.colonTableName}:info")
-#end
-    ResponseWrapper<${entity}Dto> get${entity}ByPk(@PathVariable("recordId") String recordId);
+    ResponseWrapper<${entity}QueryResultDto> get${entity}ByPk(@PathVariable("recordId") String recordId);
 
     /**
      * $!{table.comment}列表
