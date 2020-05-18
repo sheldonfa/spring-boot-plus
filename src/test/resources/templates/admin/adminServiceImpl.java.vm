@@ -1,26 +1,22 @@
 package ${package.ServiceImpl}import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+import ${cfg.queryParamPath};
+import ${cfg.queryVoPath};
+import ${superServiceImplClassPackage};
+import ${cfg.paging};
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import org.springframework.beans.factory.annotation.Autowired;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.metadata.OrderItem;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import java.io.Serializable;
-
-;
-${package.Entity}
-        .${entity};
-    ${package.Mapper}
-        .${table.mapperName};
-    ${package.Service}
-        .${table.serviceName};
-    ${cfg.queryParamPath}
-        ;
-    ${cfg.queryVoPath}
-        ;
-    ${superServiceImplClassPackage}
-        ;
-    ${cfg.paging}
-        ;
 
 
 /**
@@ -37,13 +33,13 @@ ${package.Entity}
 public class Admin${table.serviceImplName} implements Admin${table.serviceName} {
 
     @Override
-    public ${entity}AddResultDto add${entity}(${entity} paramDto,AdminDTO currentUser) {
+    public ${entity}AddResultDto add${entity}(${entity}Param paramDto,AdminDTO currentUser) {
         // step1 封装管理员信息 添加操作人邮箱、id、名称
         paramDto.setOperateId(currentUser.getUid());
         paramDto.setOperateName(currentUser.getUsername());
         paramDto.setOperateEmail(currentUser.getEmail());
         // step2 查询信息
-        ${cfg.entityObjectName}QueryParamDto query = new ${cfg.entityObjectName}QueryParamDto();
+        ${entity}QueryParamDto query = new ${entity}QueryParamDto();
         ResponseWrapper<${entity}QueryListResultDto> ${cfg.entityObjectName}QueryListResultDtoResponseWrapper = seagullDataServiceClient.get${entity}List(query);
         // step3 重复性校验
         if (Objects.nonNull(${cfg.entityObjectName}QueryListResultDtoResponseWrapper.getData())) {

@@ -1,14 +1,12 @@
 package ${package.Service};
-${package.Entity}
-        .${entity};
-    ${superServiceClassPackage}
-        ;
-    ${cfg.queryParamPath}
-        ;
-    ${cfg.queryVoPath}
-        ;
-    ${cfg.paging}
-        ;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import ${package.Entity}.${entity};
+import ${superServiceClassPackage};
+import ${cfg.queryParamPath};
+import ${cfg.queryVoPath};
+import ${cfg.paging};
+import java.io.Serializable;
+
 
 /**
  * <pre>
@@ -30,7 +28,7 @@ public interface Admin${table.serviceName} {
      * @param currentUser    当前用户
      * @return 是否成功
      */
-     ${entity}AddVo add${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
+     ${entity}AddVo add${entity}(${entity}AddParam ${cfg.entityObjectName}AddParam, AdminDTO currentUser);
 
     /**
      * 修改$!{table.comment}
@@ -56,7 +54,7 @@ public interface Admin${table.serviceName} {
      * @param recordId
      * @return
      */
-    ${entity}Dto get${entity}ByPk(String recordId);
+    ${entity}QueryVo get${entity}ByPk(String recordId);
 
     /**
      * 分页查询${table.comment}
@@ -64,7 +62,7 @@ public interface Admin${table.serviceName} {
      * @param ${cfg.entityObjectName}QueryParam
      * @return
      */
-    Page<${entity}Dto> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam);
+    Page<${entity}Vo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam);
 
 }
 #end

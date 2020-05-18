@@ -119,8 +119,9 @@ public class SpringBootPlusGenerator {
 //                "order_info",
 //                "order_item",
 //                "order_record"
-                "financial_activity",
-                "financial_plan"
+                "financial_adv",
+//                "financial_plan",
+//                "financial_plan_order"
         };
 
         // 循环生成
