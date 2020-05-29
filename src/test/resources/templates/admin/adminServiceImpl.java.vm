@@ -55,41 +55,30 @@ public class Admin${table.serviceImplName} implements Admin${table.serviceName} 
     }
 
     @Override
-    public boolean update${entity}(${entity}UpdateParamDto paramDto,AdminDTO currentUser) {
-        ResponseWrapper<Boolean> flag;
+    public ${entity}UpdateResultDto update${entity}(${entity}UpdateParamDto paramDto,AdminDTO currentUser) {
         // 添加操作人邮箱、id、名称
         paramDto.setOperateId(currentUser.getUid());
         paramDto.setOperateName(currentUser.getUsername());
         paramDto.setOperateEmail(currentUser.getEmail());
-        flag = seagullDataServiceClient.delete${entity}(paramDto.getRecordId());
-        if (flag.getData()) {
-            seagullDataServiceClient.add${entity}(paramDto);
-        }
+        ResponseWrapper<${entity}UpdateResultDto> flag = seagullDataServiceClient.update${entity}(paramDto.getRecordId());
         // 删除缓存
         redisUtil.del(String.join(RedisConstant.SEPARATOR, RedisConstant.XP_SEAGULL_XXX, ));
         return flag.getData();
     }
 
     @Override
-    public boolean delete${entity}(Long id) {
-        return super.removeById(id);
+    public boolean delete${entity}ByPk(String recordId) {
+        return seagullDataServiceClient.delete${entity}(recordId).getData();
     }
 
     @Override
     public ${entity} get${entity}ByPk(Serializable id) {
-        return getById(id);
+        return seagullDataServiceClient.get${entity}(recordId).getData();
     }
 
     @Override
-    public IPage<${entity}> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
-        ResponseWrapper<Page<TkdDto>> tkdPageWrapper;
-        try {
-        tkdPageWrapper = seagullDataServiceClient.getTkdPageList(tkdQueryParam);
-        } catch (Exception e) {
-        Log.error("getTkdPageList", e);
-        throw ExceptionUtil.dataServiceError("getTkdPageList");
-        }
-        return tkdPageWrapper.getData();
+    public Page<${entity}QueryVo> get${entity}PageList(${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
+        return seagullDataServiceClient.getTkdPageList(tkdQueryParam).getData();
     }
 
 }

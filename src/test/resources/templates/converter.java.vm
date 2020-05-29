@@ -52,19 +52,19 @@ public class ${entity}Converter {
         return new ${entity}UpdateVo().setAdded(flag);
     }
 
-    public static ${entity} to${entity}QueryVo(${entity} ${cfg.entityObjectName}) {
-        ${entity} entity = new ${entity}();
+    public static ${entity} to${entity}QueryVo(${entity} entity) {
+        ${entity}QueryVo query = new ${entity}();
         if (Objects.isNull(dto)) {
             return null;
         }
         #foreach($field in ${table.fields})
             #if(!${field.keyIdentityFlag})
             ## ----------  BEGIN 字段循环遍历  ----------
-                entity.set${field.capitalName}(dto.get${field.capitalName}());
+                query.set${field.capitalName}(entity.get${field.capitalName}());
             ## ----------  END 字段循环遍历  ----------
             #end
         #end
-        return entity;
+        return query;
     }
 
     public static ${entity} to${entity}QueryListVo(${entity} ${cfg.entityObjectName}) {

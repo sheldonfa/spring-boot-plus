@@ -68,7 +68,7 @@ public class Admin${table.controllerName} {
      * 修改$!{table.comment}
      */
     @PostMapping("/update")
-    public ResponseEntity<ResponseWrapper<Boolean>> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}UpdateParam param,
+    public ResponseEntity<ResponseWrapper<${entity}UpdateResultDto>> update${entity}(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}UpdateParam param,
             HttpServletRequest request,
             HttpServletResponse response) {
         AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
@@ -80,7 +80,7 @@ public class Admin${table.controllerName} {
      * 删除$!{table.comment}
      */
     @PostMapping("/delete")
-    public ResponseEntity<ResponseWrapper<Boolean>> delete${entity}(@RequestParam("recordId") String recordId,
+    public ResponseEntity<ResponseWrapper<${entity}DeleteResultDto>> delete${entity}(@RequestParam("recordId") String recordId,
                                                     HttpServletRequest request,
                                                     HttpServletResponse response) {
         AdminDTO currentUser = AdminUtil.getCurrentAdminOrElseGetDefault(request, response);
@@ -101,7 +101,7 @@ public class Admin${table.controllerName} {
      * $!{table.comment}分页列表
      */
     @PostMapping("/pageList")
-    public ResponseWrapper<Page<${entity}QueryResultDto>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
+    public ResponseEntity<ResponseWrapper<Page<${entity}QueryResultDto>>> get${entity}PageList(#if(${cfg.paramValidation})@Valid#end @RequestBody ${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
         Page<${entity}QueryResultDto> page = ${cfg.entityObjectName}Service.get${entity}PageList(${cfg.entityObjectName}QueryParam);
         return ResultUtil.success(page);
     }

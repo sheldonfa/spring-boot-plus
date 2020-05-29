@@ -37,16 +37,15 @@ public interface Admin${table.serviceName} {
      * @param currentUser    当前用户
      * @return 是否成功
      */
-    Boolean update${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
+    ${entity}UpdateVo update${entity}(${entity}Dto ${cfg.entityObjectName}Dto, AdminDTO currentUser);
 
     /**
      * 删除${table.comment}
      *
      * @param recordId
-     * @param currentUser    当前用户
      * @return
      */
-    Boolean delete${entity}ByPk(String recordId, AdminDTO currentUser);
+    ${entity}DeleteVo delete${entity}ByPk(String recordId);
 
     /**
      * 根据主键查询${table.comment}
