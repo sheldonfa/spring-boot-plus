@@ -32,18 +32,27 @@ public class SpringBootPlusGenerator {
                 /**
                  * 开发环境
                  */
-                .setUserName("xp_seagull")
-                .setPassword("eWJw5zUkXa3Gz1lR")
-                .setDriverName("com.mysql.jdbc.Driver")
-                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-                /**
-                 * 本地
-                 */
-//                .setUserName("root")
-//                .setPassword("root")
+//                .setUserName("xp_seagull")
+//                .setPassword("eWJw5zUkXa3Gz1lR")
 //                .setDriverName("com.mysql.jdbc.Driver")
+//                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                /**
+                 * lark_trade
+                 */
+                .setUserName("xp_lark_trade")
+                .setPassword("eGWzDUoLQb7mhEZH")
+                .setDriverName("com.mysql.jdbc.Driver")
+                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                /**
+                 * lark_goods
+                 */
+//                .setUserName("xp_lark_goods")
+//                .setPassword("zSBZvgLqLFlTsVWJ")
+//                .setDriverName("com.mysql.jdbc.Driver")
+//                .setDriverUrl("jdbc:mysql://rm-bp1x0ypop4kx4z2qbto.mysql.rds.aliyuncs.com/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+
+
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
 //                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
         /**
          * yunzhe
@@ -107,7 +116,8 @@ public class SpringBootPlusGenerator {
 //                "pay_info",
 //                "pre_pay_order",
 //                "pre_trade",
-//                "trade"
+                "trade",
+//                "store"
 
                 // seagull
 //                "message_record",
@@ -119,7 +129,7 @@ public class SpringBootPlusGenerator {
 //                "order_info",
 //                "order_item",
 //                "order_record"
-                "financial_adv",
+//                "financial_adv",
 //                "financial_plan",
 //                "financial_plan_order"
         };
