@@ -388,7 +388,7 @@ public class CodeGenerator {
             focList.add(new FileOutConfig("/templates/addParam.java.vm") {
                 @Override
                 public String outputFile(TableInfo tableInfo) {
-                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/param/" + tableInfo.getEntityName() + "AddParam" + StringPool.DOT_JAVA;
+                    return projectPath + "/src/main/java/" + projectPackagePath + "/" + pc.getModuleName() + "/dto/" + tableInfo.getEntityName() + "AddParam" + StringPool.DOT_JAVA;
                 }
             });
         }

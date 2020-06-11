@@ -27,41 +27,6 @@ public class SpringBootPlusGenerator {
     public static void main(String[] args) {
         CodeGenerator codeGenerator = new CodeGenerator();
         // 公共配置
-        // 数据库配置
-        codeGenerator
-                /**
-                 * 开发环境
-                 */
-//                .setUserName("xp_seagull")
-//                .setPassword("eWJw5zUkXa3Gz1lR")
-//                .setDriverName("com.mysql.jdbc.Driver")
-//                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-                /**
-                 * lark_trade
-                 */
-                .setUserName("xp_lark_trade")
-                .setPassword("eGWzDUoLQb7mhEZH")
-                .setDriverName("com.mysql.jdbc.Driver")
-                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-                /**
-                 * lark_goods
-                 */
-//                .setUserName("xp_lark_goods")
-//                .setPassword("zSBZvgLqLFlTsVWJ")
-//                .setDriverName("com.mysql.jdbc.Driver")
-//                .setDriverUrl("jdbc:mysql://rm-bp1x0ypop4kx4z2qbto.mysql.rds.aliyuncs.com/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-
-
-//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-        /**
-         * yunzhe
-         */
-//                .setUserName("root")
-//                .setPassword("Abcd1234")
-//                .setDriverName("com.mysql.jdbc.Driver")
-//                .setDriverUrl("jdbc:mysql://47.92.203.100:3306/tensquare_base?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
-
 
         // 包信息
         codeGenerator
@@ -104,19 +69,55 @@ public class SpringBootPlusGenerator {
         // 初始化公共变量
         codeGenerator.init();
 
+        // 数据库配置
+        codeGenerator
+                /**
+                 * 开发环境
+                 */
+//                .setUserName("xp_seagull")
+//                .setPassword("eWJw5zUkXa3Gz1lR")
+//                .setDriverName("com.mysql.jdbc.Driver")
+//                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com:3306/xp_seagull?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                /**
+                 * lark_trade
+                 */
+//                .setUserName("xp_lark_trade")
+//                .setPassword("eGWzDUoLQb7mhEZH")
+//                .setDriverName("com.mysql.jdbc.Driver")
+//                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com/xp_lark_trade?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+                /**
+                 * lark_goods
+                 */
+                .setUserName("xp_lark_goods")
+                .setPassword("PCR4KO4mpQG50PLu")
+                .setDriverName("com.mysql.jdbc.Driver")
+                .setDriverUrl("jdbc:mysql://rm-bp147e2wdp58kh6i3wo.mysql.rds.aliyuncs.com/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+
+
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_goods?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+//                .setDriverUrl("jdbc:mysql://localhost:3306/xp_lark_order?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+        /**
+         * yunzhe
+         */
+//                .setUserName("root")
+//                .setPassword("Abcd1234")
+//                .setDriverName("com.mysql.jdbc.Driver")
+//                .setDriverUrl("jdbc:mysql://47.92.203.100:3306/tensquare_base?useUnicode=true&characterEncoding=UTF-8&useSSL=false&serverTimezone=GMT%2B8");
+
         // 需要生成的表数组
         // xxx,yyy,zzz为需要生成代码的表名称
         String[] tables = {
                 // goods
 //                "category",
-//                "spu"
+                "spu",
+                "stock"
 
                 // trade
 //                "buyer_info",
 //                "pay_info",
 //                "pre_pay_order",
 //                "pre_trade",
-                "trade",
+//                "trade",
 //                "store"
 
                 // seagull

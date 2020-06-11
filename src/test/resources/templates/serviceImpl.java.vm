@@ -66,7 +66,7 @@ public class ${table.serviceImplName} extends BaseServiceImpl<${table.mapperName
     }
 
     @Override
-    public List<FinancialPlan> list(${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
+    public List<${entity}> list(${entity}QueryParam ${cfg.entityObjectName}QueryParam) {
         LambdaQueryWrapper<${entity}> queryWrapper = Wrappers.<${entity}>lambdaQuery().orderByDesc(${entity}::getCreateTime);
         if (CommonUtils.notEmpty(${entity}QueryParam.get条件())) {
             queryWrapper.eq(${entity}::get条件, ${cfg.entityObjectName}QueryParam.get条件());
