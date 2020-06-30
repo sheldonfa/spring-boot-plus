@@ -112,8 +112,11 @@ public class ${table.controllerName} {
         IPage<${entity}> paging = ${cfg.entityObjectName}Service.pageList(queryParam);
         // new page
         Page<${entity}QueryVo> page = new Page<>();
-        page.setTotal(paging.getTotal());
         page.setRecords(${entity}Converter.to${entity}QueryVoList(paging.getRecords()));
+        page.setTotal(paging.getTotal());
+        page.setPages(paging.getPages());
+        page.setSize(paging.getSize());
+        page.setCurrent(paging.getCurrent());
         return ResultUtil.success(page);
     }
 #end
